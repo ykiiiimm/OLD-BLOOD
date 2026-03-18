@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Old Blood | Esports</title>
+  <meta name="description" content="More than a team, we are a lineage. Old Blood stands for the unbreakable bonds formed through shared struggle and unwavering loyalty.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #b8000a;
+      --primary-bright: #e8001a;
+      --primary-dim: #7a0008;
+      --secondary: #f5e6e6;
+      --body: #d4c0c0;
+      --background: #0a0404;
+      --surface: #110808;
+      --border: #2a0f0f;
+      --navbar-bg: #0a0404;
+      --footer-bg: #0a0404;
+      --container: 1440px;
+      --spacing: 40px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Roboto', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--background);
+      color: var(--body);
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Subtle blood noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    figure { margin: 0; }
+    ul { list-style: none; }
+
+    .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--spacing);
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--navbar-bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px var(--spacing);
+      max-width: var(--container);
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* SVG Logo — Old Blood wordmark */
+    .logo-wordmark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 0.08em;
+      color: var(--secondary);
+      line-height: 1;
+    }
+
+    .logo-text span {
+      color: var(--primary-bright);
+    }
+
+    .nav-socials {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-socials a {
+      color: var(--body);
+      opacity: 0.6;
+      transition: opacity 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+    .nav-socials a:hover { opacity: 1; color: var(--primary-bright); }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--body);
+      padding: 4px;
+    }
+
+    /* ─── BOTTOM NAV ─── */
+    .bottom-nav {
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--spacing);
+      max-width: var(--container);
+      margin: 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links li { position: relative; }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 13px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--body);
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links li.active > a { color: var(--primary-bright); }
+
+    .caret-svg { width: 12px; height: 6px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      min-width: 150px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .nav-links li:hover .dropdown {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .dropdown a {
+      padding: 10px 16px;
+      font-size: 12px;
+      display: block;
+      text-transform: uppercase;
+    }
+    .dropdown a:hover { color: var(--primary-bright); background: rgba(184,0,10,0.08); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-actions a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 13px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--body);
+      transition: color 0.2s;
+    }
+    .nav-actions a:hover { color: var(--primary-bright); }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .mobile-overlay.open { opacity: 1; pointer-events: all; }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100%;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      z-index: 1200;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 20px;
+      gap: 24px;
+      transition: right 0.3s;
+      overflow-y: auto;
+    }
+    .mobile-menu.open { right: 0; }
+
+    .mobile-nav-links { display: flex; flex-direction: column; }
+    .mobile-nav-links a {
+      padding: 12px 0;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border);
+      color: var(--body);
+    }
+    .mobile-nav-links a:hover { color: var(--primary-bright); }
+    .mobile-sub a { padding-left: 16px; font-size: 12px; color: #888; }
+
+    .mobile-actions { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-actions a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--body);
+      padding: 6px 0;
+    }
+
+    .mobile-socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: auto;
+    }
+    .mobile-socials a { color: #666; }
+    .mobile-socials a:hover { color: var(--primary-bright); }
+
+    /* ─── HERO SLIDESHOW ─── */
+    .slideshow {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #000;
+      aspect-ratio: 16/9;
+      max-height: 810px;
+    }
+
+    .slideshow::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(10,4,4,0.6) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .slideshow-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* Fallback for missing images — gradient placeholder */
+    .slide-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-placeholder-1 { background: linear-gradient(135deg, #1a0000 0%, #3d0000 40%, #700010 100%); }
+    .slide-placeholder-2 { background: linear-gradient(135deg, #0a0404 0%, #2a0808 40%, #550015 100%); }
+    .slide-placeholder-3 { background: linear-gradient(135deg, #050202 0%, #1f0505 40%, #4a000e 100%); }
+
+    .slide-placeholder-text {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 8vw, 120px);
+      color: rgba(184,0,10,0.15);
+      letter-spacing: 0.1em;
+      text-align: center;
+      padding: 20px;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .slide-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      border: none;
+    }
+    .dot.active { background: var(--primary-bright); transform: scale(1.2); }
+
+    /* ─── SECTIONS ─── */
+    .section-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--spacing);
+    }
+
+    .section-header {
+      padding: 52px 0 24px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--secondary);
+      letter-spacing: 0.04em;
+    }
+
+    /* Red underline accent on section titles */
+    .section-header h2::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: var(--primary-bright);
+      margin-top: 8px;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--body);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+      white-space: nowrap;
+      padding: 0;
+    }
+    .link-btn:hover { color: var(--primary-bright); }
+    .link-btn svg polyline,
+    .link-btn svg line { stroke: currentColor; }
+
+    /* ─── CARDS ─── */
+    .cards-grid {
+      display: grid;
+      gap: 2px;
+      padding-bottom: 52px;
+    }
+
+    .cards-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .cards-grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .card {
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s;
+    }
+    .card:hover { background: #160a0a; }
+
+    .card-media {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-media img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      filter: brightness(0.9);
+    }
+
+    .cards-grid-3 .card-media img {
+      aspect-ratio: 16/9;
+    }
+
+    .card:hover .card-media img {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+
+    /* Image placeholder for missing images */
+    .card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      color: rgba(184,0,10,0.4);
+      text-transform: uppercase;
+    }
+
+    .cards-grid-3 .card-img-placeholder { aspect-ratio: 16/9; }
+
+    .card-img-p1 { background: linear-gradient(160deg, #1a0808, #2d0010); }
+    .card-img-p2 { background: linear-gradient(160deg, #0f0505, #220008); }
+    .card-img-p3 { background: linear-gradient(160deg, #180606, #290010); }
+    .card-img-p4 { background: linear-gradient(160deg, #120404, #1f0008); }
+
+    .card-body {
+      padding: 20px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--secondary);
+      margin-bottom: 10px;
+    }
+
+    .card-body p {
+      font-size: 12px;
+      color: #8a7070;
+      margin-bottom: 18px;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* ─── WGAMING / CLUB SECTION ─── */
+    .club-section {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 48px;
+      padding-bottom: 52px;
+      align-items: start;
+    }
+
+    .club-left {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-top: 52px;
+    }
+
+    .club-brand {
+      font-family: var(--font-display);
+      font-size: 52px;
+      color: var(--primary-bright);
+      letter-spacing: 0.06em;
+      line-height: 1;
+    }
+
+    .club-brand span { color: var(--secondary); }
+
+    .club-description {
+      font-size: 13px;
+      color: var(--body);
+      line-height: 1.75;
+      opacity: 0.8;
+    }
+
+    .club-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      padding-top: 52px;
+    }
+
+    .club-card {
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .club-card img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      filter: brightness(0.85);
+      transition: filter 0.3s;
+    }
+    .club-card:hover img { filter: brightness(1); }
+
+    .club-card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: rgba(184,0,10,0.35);
+      text-transform: uppercase;
+    }
+
+    .cc-p1 { background: linear-gradient(145deg, #1a0606, #300010); }
+    .cc-p2 { background: linear-gradient(145deg, #120404, #250008); }
+    .cc-p3 { background: linear-gradient(145deg, #1e0808, #350012); }
+    .cc-p4 { background: linear-gradient(145deg, #0e0303, #1c0006); }
+
+    .club-card-body {
+      padding: 16px 14px 20px;
+    }
+
+    .club-card-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--secondary);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .club-card-body p {
+      font-size: 12px;
+      color: #8a7070;
+      line-height: 1.55;
+    }
+
+    /* ─── VIBES SECTION — square Spotify art ─── */
+    .vibes-card .card-media img,
+    .vibes-card .card-img-placeholder {
+      aspect-ratio: 1/1;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer-wrap {
+      border-top: 1px solid var(--border);
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 32px var(--spacing);
+    }
+
+    .footer-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-top: 24px;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: #4a3030;
+      line-height: 1.7;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+      color: #4a3030;
+      padding: 4px 8px;
+      transition: color 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .footer-links a:hover { color: var(--body); }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-socials a {
+      color: #4a3030;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .footer-socials a:hover { color: var(--primary-bright); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1200px) {
+      .cards-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .club-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 960px) {
+      .nav-links, .nav-actions, .nav-socials { display: none; }
+      .hamburger { display: flex; }
+      .club-section { grid-template-columns: 1fr; }
+      .club-cards { grid-template-columns: repeat(2, 1fr); }
+      .cards-grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      :root { --spacing: 16px; }
+      .cards-grid-4 { grid-template-columns: 1fr; }
+      .cards-grid-3 { grid-template-columns: 1fr; }
+      .club-cards { grid-template-columns: 1fr; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .footer-meta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ─── MOBILE OVERLAY & MENU ─── -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="logo-wordmark" style="margin-bottom:8px;">
+    <img src="logo.jpeg" alt="Old Blood Logo" style="height:44px;width:auto;object-fit:contain;">
+    <span class="logo-text">OLD <span>BLOOD</span></span>
+  </div>
+  <nav class="mobile-nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="news.html">News</a>
+    <a href="partners.html">Partners</a>
+    <a href="teams.html">Teams</a>
+    <div class="mobile-sub">
+      <a href="valorant.html">VALORANT</a>
+    </div>
+    <a href="creators.html">Creators</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="mobile-actions">
+    <a href="#">Merch Store →</a>
+    <a href="#">Join the Lineage →</a>
+  </div>
+  <div class="mobile-socials">
+    <a href="https://x.com/xyressszz784205" target="_blank" aria-label="X">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6874 3.0625L12.6907 8.77425L8.37045 3.0625H2.11328L9.58961 12.8387L2.50378 20.9375H5.53795L11.0068 14.6886L15.7863 20.9375H21.8885L14.095 10.6342L20.7198 3.0625H17.6874Z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/iyyykiiiiiiiim/" target="_blank" aria-label="Instagram">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a href="https://www.youtube.com/@Wi_xz0" target="_blank" aria-label="YouTube">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.54 7.2c-.25-.93-.98-1.66-1.91-1.91C17.88 5 12 5 12 5s-5.88 0-7.63.29c-.93.25-1.66.98-1.91 1.91C2.17 8.95 2.17 12 2.17 12s0 3.05.29 4.8c.25.93.98 1.66 1.91 1.91C6.12 19 12 19 12 19s5.88 0 7.63-.29c.93-.25 1.66-.98 1.91-1.91.29-1.75.29-4.8.29-4.8s0-3.05-.29-4.8zM9.75 15V9l5.5 3-5.5 3z"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@its_hakimouuuuu" target="_blank" aria-label="TikTok">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.97a8.16 8.16 0 004.77 1.52V7.04a4.85 4.85 0 01-1-.35z"/></svg>
+    </a>
+    <a href="https://discord.com/users/1156188747994505216" target="_blank" aria-label="Discord">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.014.043.031.055a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/iyyykiiiiiiiim" target="_blank" aria-label="Facebook">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="top-bar">
+    <a class="nav-logo" href="index.html">
+      <div class="logo-wordmark">
+        <img src="logo.jpeg" alt="Old Blood Logo" style="height:48px;width:auto;object-fit:contain;">
+        <span class="logo-text">OLD <span>BLOOD</span></span>
+      </div>
+    </a>
+
+    <!-- Desktop socials -->
+    <div class="nav-socials">
+        <a href="https://x.com/xyressszz784205" target="_blank" aria-label="X / Twitter">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6874 3.0625L12.6907 8.77425L8.37045 3.0625H2.11328L9.58961 12.8387L2.50378 20.9375H5.53795L11.0068 14.6886L15.7863 20.9375H21.8885L14.095 10.6342L20.7198 3.0625H17.6874ZM16.6232 19.1225L5.65436 4.78217H7.45745L18.3034 19.1225H16.6232Z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/iyyykiiiiiiiim/" target="_blank" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@Wi_xz0" target="_blank" aria-label="YouTube">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.54 7.2c-.25-.93-.98-1.66-1.91-1.91C17.88 5 12 5 12 5s-5.88 0-7.63.29c-.93.25-1.66.98-1.91 1.91C2.17 8.95 2.17 12 2.17 12s0 3.05.29 4.8c.25.93.98 1.66 1.91 1.91C6.12 19 12 19 12 19s5.88 0 7.63-.29c.93-.25 1.66-.98 1.91-1.91.29-1.75.29-4.8.29-4.8s0-3.05-.29-4.8zM9.75 15V9l5.5 3-5.5 3z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@its_hakimouuuuu" target="_blank" aria-label="TikTok">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.97a8.16 8.16 0 004.77 1.52V7.04a4.85 4.85 0 01-1-.35z"/></svg>
+      </a>
+      <a href="https://discord.com/users/1156188747994505216" target="_blank" aria-label="Discord">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.014.043.031.055a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/iyyykiiiiiiiim" target="_blank" aria-label="Facebook">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+
+      <button class="hamburger" onclick="openMenu()" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" fill="currentColor"/><rect y="9" width="20" height="2" fill="currentColor"/><rect y="15" width="20" height="2" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav>
+    <div class="bottom-nav">
+      <ul class="nav-links">
+        <li class="active"><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="partners.html">Partners</a></li>
+        <li>
+          <a href="teams.html">
+            Teams
+            <svg class="caret-svg" viewBox="0 0 12 6"><path d="M1 1L6 5"/><path d="M6 5L11 1"/></svg>
+          </a>
+          <div class="dropdown">
+            <a href="valorant.html">VALORANT</a>
+          </div>
+        </li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#">
+          Merch Store
+          <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+        </a>
+        <a href="#">
+          Join the Lineage
+          <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ─── MAIN ─── -->
+<main>
+
+  <!-- Hero Slideshow -->
+  <section>
+    <div class="slideshow" id="slideshow">
+      <div class="slideshow-track" id="slideshowTrack">
+        <!-- Clone of last slide at the beginning (for seamless backward wrap - not used but keeps structure) -->
+        <div class="slide clone">
+          <img src="hero_3.jpeg" alt="" aria-hidden="true">
+        </div>
+        <div class="slide">
+          <img src="hero_1.jpeg" alt="Old Blood — Shadow Squad Championship">
+        </div>
+        <div class="slide">
+          <img src="hero_2.jpeg" alt="Old Blood — Shadow Squad Champions">
+        </div>
+        <div class="slide">
+          <img src="hero_3.jpeg" alt="Old Blood — The Lineage">
+        </div>
+        <!-- Clone of first slide at the end for seamless forward loop -->
+        <div class="slide clone">
+          <img src="hero_1.jpeg" alt="" aria-hidden="true">
+        </div>
+      </div>
+      <div class="slide-dots" id="slideDots">
+        <button class="dot active" onclick="goToSlide(0)"></button>
+        <button class="dot" onclick="goToSlide(1)"></button>
+        <button class="dot" onclick="goToSlide(2)"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest News -->
+  <section>
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Latest News</h2>
+        <a href="news.html" class="link-btn">
+          View All
+          <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+        </a>
+      </div>
+
+      <div class="cards-grid cards-grid-4">
+        <div class="card">
+          <div class="card-media">
+            <img src="new_card1.jpeg" alt="TenZ Player of the Match" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">TenZ Clutches a Pivotal 1v3 to Secure the Map!</h3>
+            <p>Player of the Match — Sentinels' TenZ delivers a legendary performance at VALORANT Champions.</p>
+            <a href="news.html" class="link-btn">
+              Read More
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-media">
+            <img src="new_card2.jpeg" alt="Real Man Agent joins Shadow Squad" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Real Man Agent Joins as Shadow Squad's Newest Omen Main!</h3>
+            <p>Agent Breakdown — Player Spotlight: Real Man Agent. Role: Omen. Status: Recruited. Champions 2024.</p>
+            <a href="news.html" class="link-btn">
+              Read More
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-media">
+            <img src="new_card3.jpeg" alt="Navi Shawn Clutches 1v3 on Haven" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Navi Shawn Clutches 1v3 on Haven to Secure the Win!</h3>
+            <p>Player of the Match — Navi Shawn delivers an ice-cold performance at VALORANT Champions to close out the series.</p>
+            <a href="news.html" class="link-btn">
+              Read More
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-media">
+            <img src="new_card4.jpeg" alt="Nova's Unbelievable 1v4 Ace" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Nova's Unbelievable 1v4 Ace — Fnatic Advances at Masters!</h3>
+            <p>Jane 'Nova' Doe steals the win for Fnatic with a clutch Jett play that shook the entire arena.</p>
+            <a href="news.html" class="link-btn">
+              Read More
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trending Now — Sentinels YT Videos -->
+  <section>
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Trending Now</h2>
+        <a href="https://www.youtube.com/@Wi_xz0" class="link-btn" target="_blank">
+          Watch on YouTube
+          <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+        </a>
+      </div>
+
+      <div class="cards-grid cards-grid-3">
+        <!-- Video 1: bang -->
+        <div class="card">
+          <div class="card-media">
+            <img src="https://i.ytimg.com/vi/4JQ8sMt-GnM/maxresdefault.jpg" alt="bang" loading="lazy"
+              onerror="this.src='https://i.ytimg.com/vi/4JQ8sMt-GnM/mqdefault.jpg'">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">our goattt</h3>
+            <a href="https://youtu.be/4JQ8sMt-GnM" class="link-btn" target="_blank">
+              Watch
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Video 2: d4v41 -->
+        <div class="card">
+          <div class="card-media">
+            <img src="https://img.youtube.com/vi/4K1w_cHUZUU/maxresdefault.jpg" alt="d4v41" loading="lazy"
+              onerror="this.src='https://i.ytimg.com/vi/sgIVBTrF1jM/mqdefault.jpg'">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">clutch man.exe</h3>
+            <a href="https://youtu.be/sgIVBTrF1jM" class="link-btn" target="_blank">
+              Watch
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Video 3: sentinels -->
+        <div class="card">
+          <div class="card-media">
+            <img src="https://img.youtube.com/vi/ZQAeYXv-ggo/maxresdefault.jpg" alt="sentinels" loading="lazy"
+              onerror="this.src='https://i.ytimg.com/vi/CZGK5ovAxu0/mqdefault.jpg'">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">OB doc time</h3>
+            <a href="https://youtu.be/CZGK5ovAxu0" class="link-btn" target="_blank">
+              Watch
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lineage Club (WGAMING equivalent) -->
+  <section>
+    <div class="section-inner">
+      <div class="club-section">
+        <!-- Left -->
+        <div class="club-left">
+          <div class="club-brand">THE<br><span>LINEAGE</span><br>CLUB</div>
+          <p class="club-description">The Old Blood Lineage Club is how we keep our community bound together — just like the team. Earn rewards through loyalty: follow our socials, own official merch, attend live events, or join our YouTube membership. Every action deepens the bond.</p>
+          <a href="contact.html" class="link-btn">
+            Join the Lineage
+            <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+          </a>
+        </div>
+
+        <!-- Right: 4 feature cards -->
+        <div class="club-cards">
+          <div class="club-card">
+            <img src="Feature_Cards_1.jpeg" alt="Esports Elite Club Membership Card" loading="lazy">
+            <div class="club-card-body">
+              <h3 class="club-card-title">Esports Elite Club Member</h3>
+              <p>All members receive a digital Blood Card — Pro / Master rank displayed on their profile.</p>
+            </div>
+          </div>
+          <div class="club-card">
+            <img src="Feature_Cards_2.jpeg" alt="Obsidian Vanguard Member Card" loading="lazy">
+            <div class="club-card-body">
+              <h3 class="club-card-title">Obsidian Vanguard Member</h3>
+              <p>Prove your dedication and unlock the Obsidian Vanguard tier — Premier / Elite rank awaits.</p>
+            </div>
+          </div>
+          <div class="club-card">
+            <img src="Feature_Cards_3.jpeg" alt="Aurora Vanguard Member Card" loading="lazy">
+            <div class="club-card-body">
+              <h3 class="club-card-title">Aurora Vanguard Member</h3>
+              <p>Rise to the Aurora Vanguard tier and show off Cosmic / Grandmaster status on your profile.</p>
+            </div>
+          </div>
+          <div class="club-card">
+            <img src="Feature_Cards_4.jpeg" alt="Crimson Phoenix Member Card" loading="lazy">
+            <div class="club-card-body">
+              <h3 class="club-card-title">Crimson Phoenix VIP</h3>
+              <p>The highest tier. Infernal / Grandmaster. Only the most loyal reach the Crimson Phoenix.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vibes — Martin Garrix -->
+  <section>
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Vibes</h2>
+        <a href="https://open.spotify.com/" class="link-btn" target="_blank">
+          Listen on Spotify
+          <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+        </a>
+      </div>
+
+      <div class="cards-grid cards-grid-4">
+        <div class="card vibes-card">
+          <div class="card-media">
+            <img src="Spotify_Covers1.jpeg" alt="VALORANT Official - Velocity Chaos" loading="lazy" style="aspect-ratio:1/1;object-fit:cover;">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">This Is VALORANT</h3>
+            <p>VALORANT Official — Dark EDM // Hardcore Sessions. The warmup playlist before every match block.</p>
+            <a href="https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b" class="link-btn" target="_blank">
+              Play on Spotify
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card vibes-card">
+          <div class="card-media">
+            <img src="Spotify_Covers2.jpeg" alt="VALORANT Official - Mechanical Decay" loading="lazy" style="aspect-ratio:1/1;object-fit:cover;">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">EVOLUTION // VALORANT</h3>
+            <p>VALORANT Official — Distorted Chrono // Industrial Echoes. What we loop during late night VOD reviews.</p>
+            <a href="https://open.spotify.com/track/2yGcGAhdIGiObLOnmsAoFT" class="link-btn" target="_blank">
+              Play on Spotify
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card vibes-card">
+          <div class="card-media">
+            <img src="Spotify_Covers3.jpeg" alt="VALORANT Official - Neon Pulse LP" loading="lazy" style="aspect-ratio:1/1;object-fit:cover;">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">PLAY: CYPHER</h3>
+            <p>VALORANT Official — Nightdrive Records 2024. The bus anthem every road trip to LAN. No skips.</p>
+            <a href="https://open.spotify.com/track/6dOtVTDdiauQNBQEDOtlAB" class="link-btn" target="_blank">
+              Play on Spotify
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card vibes-card">
+          <div class="card-media">
+            <img src="Spotify_Covers4.jpeg" alt="VALORANT Official - Neon Pulse LP Vol. 2" loading="lazy" style="aspect-ratio:1/1;object-fit:cover;">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">PLAY: ISO</h3>
+            <p>VALORANT Official — Nightdrive Records 2024. The victory closer after every series win. Every. Single. Time.</p>
+            <a href="https://open.spotify.com/track/51ZQ1vr10ffzbwIjDCwqm4" class="link-btn" target="_blank">
+              Play on Spotify
+              <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer style="background:var(--footer-bg);">
+  <div class="footer-wrap">
+    <hr style="border:none;border-top:1px solid var(--border);margin-bottom:0;">
+    <div class="footer-meta">
+      <p class="footer-copy">© Copyright 2026 — All rights reserved.<br>Old Blood™ is a registered trademark of Old Blood Esports.</p>
+      <div class="footer-links">
+        <a href="derivative-works.html">Derivative Works</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="resources.html">Resources</a>
+      </div>
+      <div class="footer-socials">
+        <a href="https://x.com/xyressszz784205" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6874 3.0625L12.6907 8.77425L8.37045 3.0625H2.11328L9.58961 12.8387L2.50378 20.9375H5.53795L11.0068 14.6886L15.7863 20.9375H21.8885L14.095 10.6342L20.7198 3.0625H17.6874ZM16.6232 19.1225L5.65436 4.78217H7.45745L18.3034 19.1225H16.6232Z"/></svg></a>
+        <a href="https://www.instagram.com/iyyykiiiiiiiim/" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+        <a href="https://www.youtube.com/@Wi_xz0" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.54 7.2c-.25-.93-.98-1.66-1.91-1.91C17.88 5 12 5 12 5s-5.88 0-7.63.29c-.93.25-1.66.98-1.91 1.91C2.17 8.95 2.17 12 2.17 12s0 3.05.29 4.8c.25.93.98 1.66 1.91 1.91C6.12 19 12 19 12 19s5.88 0 7.63-.29c.93-.25 1.66-.98 1.91-1.91.29-1.75.29-4.8.29-4.8s0-3.05-.29-4.8zM9.75 15V9l5.5 3-5.5 3z"/></svg></a>
+        <a href="https://www.tiktok.com/@its_hakimouuuuu" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.97a8.16 8.16 0 004.77 1.52V7.04a4.85 4.85 0 01-1-.35z"/></svg></a>
+        <a href="https://discord.com/users/1156188747994505216" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.014.043.031.055a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg></a>
+        <a href="https://www.facebook.com/iyyykiiiiiiiim" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── JS ─── -->
+<script>
+  // ─── SLIDESHOW — Infinite seamless loop (1→2→3→1→2→3...) ───
+  // Slides: [clone-3] [1] [2] [3] [clone-1]
+  // Start at index 1 (real slide 1)
+  const track = document.getElementById('slideshowTrack');
+  const dots = document.querySelectorAll('.dot');
+  const totalReal = 3;
+  let idx = 1; // start at real slide 1
+  let sliding = false;
+
+  function setSlide(i, animate) {
+    track.style.transition = animate ? 'transform 0.8s cubic-bezier(0.4,0,0.2,1)' : 'none';
+    track.style.transform = `translateX(-${i * 100}%)`;
+    // Update dots (real slides are at index 1,2,3)
+    const dotIdx = ((i - 1) + totalReal) % totalReal;
+    dots.forEach((d, di) => d.classList.toggle('active', di === dotIdx));
+  }
+
+  function nextSlide() {
+    if (sliding) return;
+    sliding = true;
+    idx++;
+    setSlide(idx, true);
+  }
+
+  track.addEventListener('transitionend', () => {
+    // If we landed on clone-1 (index 4), jump instantly to real slide 1
+    if (idx === totalReal + 1) {
+      idx = 1;
+      setSlide(idx, false);
+    }
+    // If we landed on clone-3 (index 0), jump instantly to real slide 3
+    if (idx === 0) {
+      idx = totalReal;
+      setSlide(idx, false);
+    }
+    sliding = false;
+  });
+
+  // Dot click — jump to real slide
+  dots.forEach((dot, di) => {
+    dot.addEventListener('click', () => {
+      idx = di + 1;
+      setSlide(idx, true);
+    });
+  });
+
+  // Init position without animation
+  setSlide(idx, false);
+
+  // Autoplay
+  let timer = setInterval(nextSlide, 6000);
+
+  function openMenu() {
+    document.getElementById('mobileMenu').classList.add('open');
+    document.getElementById('mobileOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('mobileOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+
+</body>
+</html>
