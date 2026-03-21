@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessories — Old Blood Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, rgba(58,0,4,.25) 0%, transparent 100%);
+}
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-condensed); font-size: 11px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px;
+}
+.breadcrumb a:hover { color: var(--cream); }
+.breadcrumb span { color: var(--text-muted); }
+
+.products-section { padding: 60px 0 80px; }
+.products-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 32px; gap: 12px; flex-wrap: wrap;
+}
+.products-count { font-family: var(--font-condensed); font-size: 13px; color: var(--text-muted); }
+.sort-select {
+  background: var(--bg2); border: 1px solid var(--border2); color: var(--text);
+  padding: 8px 32px 8px 12px; border-radius: var(--radius);
+  font-family: var(--font-condensed); font-size: 12px; font-weight: 600;
+  letter-spacing: .08em; cursor: pointer; outline: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238a6060' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+}
+.products-grid-acc {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+}
+@media (max-width: 1024px) { .products-grid-acc { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .products-grid-acc { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Store</a>
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span>Accessories</span>
+      </div>
+      <div class="section-label">Category</div>
+      <h1 class="section-title" style="font-size:clamp(40px,6vw,80px);">ACCESSORIES</h1>
+      <p style="color:var(--text-muted);font-size:14px;max-width:400px;line-height:1.7;margin-top:12px;">Caps, mousepads, sticker packs and more. The small stuff that hits different.</p>
+    </div>
+  </section>
+
+  <section class="products-section">
+    <div class="container">
+      <div class="products-toolbar">
+        <div class="products-count" id="products-count">Loading...</div>
+        <select class="sort-select" onchange="renderProducts()">
+          <option>Sort: Featured</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+        </select>
+      </div>
+      <div class="products-grid-acc" id="products-grid"></div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="store.js"></script>
+<script>
+  injectHeader('accessories.html');
+  injectFooter();
+  function renderProducts() {
+    const products = getProducts('accessories');
+    document.getElementById('products-grid').innerHTML = products.map(productCardHTML).join('');
+    document.getElementById('products-count').textContent = `${products.length} products`;
+  }
+  renderProducts();
+</script>
+</body>
+</html>

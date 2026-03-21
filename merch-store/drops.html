@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drops — Old Blood Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+.drops-hero {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(120deg, #200003 0%, #0a0303 50%, var(--bg) 100%);
+}
+.drops-hero::after {
+  content: 'DROPS';
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: 280px;
+  color: rgba(184,0,10,.05);
+  letter-spacing: .08em;
+  pointer-events: none;
+  user-select: none;
+}
+.drops-hero-content { position: relative; z-index: 2; padding: 80px 0; }
+
+.drop-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 2px;
+  background: var(--bg2);
+  transition: border-color .3s;
+}
+.drop-card:hover { border-color: var(--border2); }
+
+.drop-card-visual {
+  aspect-ratio: unset;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.drop-card-visual-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform .6s var(--ease-out-expo);
+}
+.drop-card:hover .drop-card-visual-bg { transform: scale(1.04); }
+
+.drop-card-info {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.drop-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--red-hot);
+  margin-bottom: 16px;
+}
+.drop-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--red-hot);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+.drop-title {
+  font-family: var(--font-display);
+  font-size: 52px;
+  color: var(--cream);
+  line-height: 1;
+  letter-spacing: .03em;
+  margin-bottom: 16px;
+}
+.drop-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.drop-price-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.drop-price {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: var(--cream);
+}
+.drop-stock {
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.past-drops-section { padding: 80px 0; }
+.past-drops-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 40px;
+}
+.past-drop-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.past-drop-card::before {
+  content: 'SOLD OUT';
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-family: var(--font-condensed);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: var(--text-dim);
+  border: 1px solid var(--border2);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+.past-drop-num {
+  font-family: var(--font-display);
+  font-size: 80px;
+  color: rgba(184,0,10,.08);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.past-drop-name {
+  font-family: var(--font-condensed);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.past-drop-date {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .drop-card { grid-template-columns: 1fr; }
+  .drop-card-visual { min-height: 240px; }
+  .drop-card-info { padding: 28px; }
+  .past-drops-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<main>
+  <section class="drops-hero">
+    <div class="container">
+      <div class="drops-hero-content">
+        <div class="section-label">Limited Releases</div>
+        <h1 class="section-title" style="font-size:clamp(48px,8vw,120px);line-height:.92;">DROPS</h1>
+        <p style="color:var(--text-muted);font-size:15px;max-width:440px;line-height:1.7;margin-top:20px;">Limited. Numbered. Never restocked. Each drop is tied to a moment in Old Blood history. When it sells out, it's history.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Active Drop -->
+  <section style="padding: 48px 0;">
+    <div class="container">
+      <div style="font-family:var(--font-condensed);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red-hot);margin-bottom:20px;">Current Drop</div>
+      <div class="drop-card">
+        <div class="drop-card-visual">
+          <div class="drop-card-visual-bg" style="background:linear-gradient(145deg,#2a0008,#600020 50%,#900030);"></div>
+          <div style="position:relative;z-index:2;text-align:center;">
+            <svg width="80" height="80" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:rgba(232,0,26,.3);margin:0 auto 12px;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width=".6" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+            </svg>
+            <div style="font-family:var(--font-display);font-size:28px;color:rgba(245,230,230,.15);letter-spacing:.1em;">DROP 001</div>
+          </div>
+        </div>
+        <div class="drop-card-info">
+          <div class="drop-status">Live Now</div>
+          <div class="drop-title">VALORANT<br>DROP TEE</div>
+          <p class="drop-desc">VALORANT collab. Blood-red colourway. Agent-inspired design. Numbered print on inner collar. Once sold out — it's done forever.</p>
+          <div class="drop-price-row">
+            <span class="drop-price">$44.99</span>
+            <span class="drop-stock">Limited Stock</span>
+          </div>
+          <div style="margin-bottom:20px;">
+            <div style="font-family:var(--font-condensed);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Sizes</div>
+            <div class="size-grid">
+              <button class="size-btn" onclick="this.classList.toggle('active')">S</button>
+              <button class="size-btn" onclick="this.classList.toggle('active')">M</button>
+              <button class="size-btn" onclick="this.classList.toggle('active')">L</button>
+              <button class="size-btn unavailable">XL</button>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-lg" onclick="addToCart({id:'p007',name:'VALORANT Drop Tee',price:44.99,category:'Drops',size:'M',color:'Blood Red'});showToast('Added!')">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            Add to Cart — $44.99
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Past Drops -->
+  <section class="past-drops-section">
+    <div class="container">
+      <div class="section-label">Archive</div>
+      <h2 class="section-title">PAST DROPS</h2>
+      <div class="past-drops-grid">
+        <div class="past-drop-card">
+          <div class="past-drop-num">000</div>
+          <div class="past-drop-name">Founding Hoodie</div>
+          <div class="past-drop-date">Jan 2026 · 50 Units</div>
+        </div>
+        <div class="past-drop-card">
+          <div class="past-drop-num">— —</div>
+          <div class="past-drop-name">Coming Soon</div>
+          <div class="past-drop-date">Stay tuned</div>
+        </div>
+        <div class="past-drop-card">
+          <div class="past-drop-num">— —</div>
+          <div class="past-drop-name">Coming Soon</div>
+          <div class="past-drop-date">Stay tuned</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="store.js"></script>
+<script>
+  injectHeader('drops.html');
+  injectFooter();
+</script>
+</body>
+</html>

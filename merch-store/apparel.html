@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apparel — Old Blood Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, rgba(58,0,4,.3) 0%, transparent 100%);
+}
+.page-hero-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+.breadcrumb a { transition: color .2s; }
+.breadcrumb a:hover { color: var(--cream); }
+.breadcrumb span { color: var(--text-muted); }
+
+.shop-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+  padding: 48px 0 80px;
+  align-items: start;
+}
+
+.filter-panel { position: sticky; top: 80px; }
+.filter-group { margin-bottom: 32px; }
+.filter-group-title {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.filter-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  transition: color .2s;
+}
+.filter-check:hover { color: var(--cream); }
+.filter-check input { accent-color: var(--red-hot); cursor: pointer; }
+
+.products-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.products-count {
+  font-family: var(--font-condensed);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.sort-select {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238a6060' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.products-grid-shop {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+@media (max-width: 1024px) {
+  .shop-layout { grid-template-columns: 1fr; }
+  .filter-panel { position: static; display: flex; gap: 24px; flex-wrap: wrap; }
+  .filter-group { margin-bottom: 0; }
+  .products-grid-shop { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .products-grid-shop { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div>
+          <div class="breadcrumb">
+            <a href="index.html">Store</a>
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span>Apparel</span>
+          </div>
+          <div class="section-label">Category</div>
+          <h1 class="section-title" style="font-size:clamp(40px,6vw,80px);">APPAREL</h1>
+        </div>
+        <p style="color:var(--text-muted);font-size:14px;max-width:320px;line-height:1.7;">Hoodies, tees, jackets and joggers. Everything built to be worn — not just shown.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="shop-layout">
+      <!-- Filter Sidebar -->
+      <aside class="filter-panel">
+        <div class="filter-group">
+          <div class="filter-group-title">Size</div>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> XS</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> S</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> M</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> L</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> XL</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> 2XL</label>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-title">Price</div>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> Under $40</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> $40 – $80</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> $80+</label>
+        </div>
+        <div class="filter-group">
+          <div class="filter-group-title">Type</div>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> Hoodies</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> Tees</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> Jackets</label>
+          <label class="filter-check"><input type="checkbox" onchange="applyFilters()"> Joggers</label>
+        </div>
+      </aside>
+
+      <!-- Product Grid -->
+      <div>
+        <div class="products-toolbar">
+          <div class="products-count" id="products-count">Loading...</div>
+          <select class="sort-select" onchange="renderProducts()">
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name">Name A–Z</option>
+          </select>
+        </div>
+        <div class="products-grid-shop" id="products-grid"></div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="store.js"></script>
+<script>
+  injectHeader('apparel.html');
+  injectFooter();
+
+  function applyFilters() { renderProducts(); }
+
+  function renderProducts() {
+    const sort = document.querySelector('.sort-select')?.value || 'featured';
+    let products = getProducts('apparel');
+
+    if (sort === 'price-asc') products = [...products].sort((a,b) => a.price - b.price);
+    if (sort === 'price-desc') products = [...products].sort((a,b) => b.price - a.price);
+    if (sort === 'name') products = [...products].sort((a,b) => a.name.localeCompare(b.name));
+
+    const grid = document.getElementById('products-grid');
+    const count = document.getElementById('products-count');
+    grid.innerHTML = products.map(productCardHTML).join('');
+    count.textContent = `${products.length} products`;
+  }
+
+  renderProducts();
+</script>
+</body>
+</html>
