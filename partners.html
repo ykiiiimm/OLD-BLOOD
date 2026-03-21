@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partners | Old Blood</title>
+  <link rel="icon" href="logo.jpeg">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--primary:#b8000a;--primary-bright:#e8001a;--secondary:#f5e6e6;--body:#d4c0c0;--background:#0a0404;--surface:#110808;--border:#2a0f0f;--font-display:'Bebas Neue',sans-serif;--font-body:'Roboto',sans-serif;--spacing:40px;--container:1440px}
+    html{scroll-behavior:smooth}body{background:var(--background);color:var(--body);font-family:var(--font-body);font-size:13px;line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}img{max-width:100%;display:block}ul{list-style:none}
+    header{position:sticky;top:0;z-index:1000;background:var(--background);border-bottom:1px solid var(--border)}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;padding:14px var(--spacing);max-width:var(--container);margin:0 auto}
+    .logo-wordmark{display:flex;align-items:center;gap:10px}
+    .logo-text{font-family:var(--font-display);font-size:28px;letter-spacing:.08em;color:var(--secondary);line-height:1}
+    .logo-text span{color:var(--primary-bright)}
+    .nav-socials{display:flex;align-items:center;gap:14px}
+    .nav-socials a{color:var(--body);opacity:.6;transition:opacity .2s,color .2s;display:flex}
+    .nav-socials a:hover{opacity:1;color:var(--primary-bright)}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--body);padding:4px}
+    .bottom-nav{border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 var(--spacing);max-width:var(--container);margin:0 auto}
+    .nav-links{display:flex;align-items:center}.nav-links li{position:relative}
+    .nav-links a{display:flex;align-items:center;gap:6px;padding:13px 16px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--body);transition:color .2s;white-space:nowrap}
+    .nav-links a:hover,.nav-links li.active>a{color:var(--primary-bright)}
+    .caret-svg{width:12px;height:6px;fill:none;stroke:currentColor;stroke-width:1.5}
+    .dropdown{position:absolute;top:100%;left:0;background:var(--surface);border:1px solid var(--border);min-width:150px;opacity:0;pointer-events:none;transform:translateY(-4px);transition:opacity .2s,transform .2s;z-index:100}
+    .nav-links li:hover .dropdown{opacity:1;pointer-events:all;transform:translateY(0)}
+    .dropdown a{padding:10px 16px;font-size:12px;display:block;text-transform:uppercase}
+    .dropdown a:hover{color:var(--primary-bright)}
+    .nav-actions{display:flex;align-items:center}
+    .nav-actions a{display:flex;align-items:center;gap:6px;padding:13px 16px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--body);transition:color .2s}
+    .nav-actions a:hover{color:var(--primary-bright)}
+    .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1100;opacity:0;pointer-events:none;transition:opacity .3s}
+    .mobile-overlay.open{opacity:1;pointer-events:all}
+    .mobile-menu{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--surface);border-left:1px solid var(--border);z-index:1200;display:flex;flex-direction:column;padding:24px 20px;gap:20px;transition:right .3s;overflow-y:auto}
+    .mobile-menu.open{right:0}
+    .mobile-nav-links{display:flex;flex-direction:column}
+    .mobile-nav-links a{padding:12px 0;font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border);color:var(--body)}
+    .mobile-nav-links a:hover{color:var(--primary-bright)}
+    .mobile-socials{display:flex;flex-wrap:wrap;gap:14px}.mobile-socials a{color:#666}
+    .page-inner{max-width:var(--container);margin:0 auto;padding:0 var(--spacing)}
+    .page-header{padding:64px 0 48px;border-bottom:1px solid var(--border);margin-bottom:64px}
+    .page-header h1{font-family:var(--font-display);font-size:72px;color:var(--secondary);letter-spacing:.04em;line-height:1}
+    .page-header h1 span{color:var(--primary-bright)}
+    .page-header p{font-size:15px;color:var(--body);margin-top:16px;max-width:600px;line-height:1.7;opacity:.8}
+    .section-title{font-family:var(--font-display);font-size:42px;color:var(--secondary);letter-spacing:.04em;margin-bottom:32px;line-height:1}
+    .section-title::after{content:'';display:block;width:40px;height:2px;background:var(--primary-bright);margin-top:10px}
+
+    /* PARTNERS */
+    .partners-intro{font-size:14px;color:var(--body);line-height:1.8;max-width:700px;margin-bottom:64px;opacity:.85}
+    .partners-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:80px}
+    .partner-card{background:var(--surface);padding:48px 32px;display:flex;flex-direction:column;gap:20px;transition:background .3s;border-left:3px solid transparent}
+    .partner-card:hover{background:#160a0a;border-left-color:var(--primary)}
+    .partner-logo-box{height:80px;display:flex;align-items:center}
+    .partner-logo-box svg{fill:var(--secondary);opacity:.85;transition:opacity .3s}
+    .partner-card:hover .partner-logo-box svg{opacity:1}
+    .partner-cat{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:#6a4040;margin-bottom:4px}
+    .partner-name{font-family:var(--font-display);font-size:26px;color:var(--secondary);letter-spacing:.04em}
+    .partner-desc{font-size:12px;color:#8a7070;line-height:1.65}
+    .partner-link{display:inline-flex;align-items:center;gap:6px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--body);margin-top:8px;transition:color .2s}
+    .partner-link:hover{color:var(--primary-bright)}
+    .partner-link svg polyline,.partner-link svg line{stroke:currentColor}
+    .become-partner{background:var(--surface);border-left:3px solid var(--primary);padding:48px;margin-bottom:80px;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
+    .become-partner h3{font-family:var(--font-display);font-size:36px;color:var(--secondary);letter-spacing:.04em}
+    .become-partner p{font-size:13px;color:#8a7070;margin-top:8px;max-width:500px;line-height:1.7}
+    .btn-red{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;padding:14px 28px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:background .2s;border:none;cursor:pointer}
+    .btn-red:hover{background:var(--primary-bright)}
+
+    footer{border-top:1px solid var(--border);margin-top:80px}
+    .footer-inner{max-width:var(--container);margin:0 auto;padding:32px var(--spacing)}
+    .footer-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding-top:24px}
+    .footer-copy{font-size:11px;color:#4a3030;line-height:1.7}
+    .footer-links{display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+    .footer-links a{font-size:11px;color:#4a3030;padding:4px 8px;transition:color .2s;text-transform:uppercase;letter-spacing:.05em}
+    .footer-links a:hover{color:var(--body)}
+    .footer-socials{display:flex;align-items:center;gap:12px}
+    .footer-socials a{color:#4a3030;display:flex;transition:color .2s}
+    .footer-socials a:hover{color:var(--primary-bright)}
+    @media(max-width:960px){.nav-links,.nav-actions,.nav-socials{display:none}.hamburger{display:flex}.partners-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:640px){:root{--spacing:16px}.page-header h1{font-size:48px}.partners-grid{grid-template-columns:1fr}.footer-meta{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="logo-wordmark"><img src="logo.jpeg" alt="Old Blood" style="height:40px;width:auto;"><span class="logo-text">OLD <span>BLOOD</span></span></a>
+  <nav class="mobile-nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="news.html">News</a>
+    <a href="partners.html">Partners</a>
+    <a href="teams.html">Teams</a>
+    <a href="creators.html">Creators</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="mobile-socials">
+    <a href="https://x.com/xyressszz784205" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6874 3.0625L12.6907 8.77425L8.37045 3.0625H2.11328L9.58961 12.8387L2.50378 20.9375H5.53795L11.0068 14.6886L15.7863 20.9375H21.8885L14.095 10.6342L20.7198 3.0625H17.6874Z"/></svg></a>
+    <a href="https://www.instagram.com/iyyykiiiiiiiim/" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+    <a href="https://www.youtube.com/@Wi_xz0" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.54 7.2c-.25-.93-.98-1.66-1.91-1.91C17.88 5 12 5 12 5s-5.88 0-7.63.29c-.93.25-1.66.98-1.91 1.91C2.17 8.95 2.17 12 2.17 12s0 3.05.29 4.8c.25.93.98 1.66 1.91 1.91C6.12 19 12 19 12 19s5.88 0 7.63-.29c.93-.25 1.66-.98 1.91-1.91.29-1.75.29-4.8.29-4.8s0-3.05-.29-4.8zM9.75 15V9l5.5 3-5.5 3z"/></svg></a>
+    <a href="https://discord.com/users/1156188747994505216" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.014.043.031.055a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.1.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg></a>
+  </div>
+</div>
+
+<header>
+  <div class="top-bar">
+    <a href="index.html" class="logo-wordmark"><img src="logo.jpeg" alt="Old Blood" style="height:48px;width:auto;"><span class="logo-text">OLD <span>BLOOD</span></span></a>
+    <div class="nav-socials">
+      <a href="https://x.com/xyressszz784205" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6874 3.0625L12.6907 8.77425L8.37045 3.0625H2.11328L9.58961 12.8387L2.50378 20.9375H5.53795L11.0068 14.6886L15.7863 20.9375H21.8885L14.095 10.6342L20.7198 3.0625H17.6874Z"/></svg></a>
+      <a href="https://www.instagram.com/iyyykiiiiiiiim/" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      <a href="https://www.youtube.com/@Wi_xz0" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.54 7.2c-.25-.93-.98-1.66-1.91-1.91C17.88 5 12 5 12 5s-5.88 0-7.63.29c-.93.25-1.66.98-1.91 1.91C2.17 8.95 2.17 12 2.17 12s0 3.05.29 4.8c.25.93.98 1.66 1.91 1.91C6.12 19 12 19 12 19s5.88 0 7.63-.29c.93-.25 1.66-.98 1.91-1.91.29-1.75.29-4.8.29-4.8s0-3.05-.29-4.8zM9.75 15V9l5.5 3-5.5 3z"/></svg></a>
+      <a href="https://www.tiktok.com/@its_hakimouuuuu" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.97a8.16 8.16 0 004.77 1.52V7.04a4.85 4.85 0 01-1-.35z"/></svg></a>
+      <a href="https://discord.com/users/1156188747994505216" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.014.043.031.055a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.1.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg></a>
+      <a href="https://www.facebook.com/iyyykiiiiiiiim" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+      <button class="hamburger" onclick="openMenu()"><svg width="22" height="22" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" fill="currentColor"/><rect y="9" width="20" height="2" fill="currentColor"/><rect y="15" width="20" height="2" fill="currentColor"/></svg></button>
+    </div>
+  </div>
+  <nav>
+    <div class="bottom-nav">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="news.html">News</a></li>
+        <li class="active"><a href="partners.html">Partners</a></li>
+        <li><a href="teams.html">Teams <svg class="caret-svg" viewBox="0 0 12 6"><path d="M1 1L6 5"/><path d="M6 5L11 1"/></svg></a><div class="dropdown"><a href="valorant.html">VALORANT</a></div></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#">Merch Store <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg></a>
+        <a href="#">Join the Lineage <svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="page-inner">
+    <div class="page-header">
+      <h1>OUR <span>PARTNERS</span></h1>
+      <p>The brands that believe in the lineage. Together we build something that lasts.</p>
+    </div>
+
+    <p class="partners-intro">Old Blood is proud to partner with brands that share our values — excellence, loyalty, and the relentless pursuit of greatness. Our partners are not just sponsors. They are part of the lineage.</p>
+
+    <h2 class="section-title">Official Partners</h2>
+    <div class="partners-grid" id="partnersGrid">
+      <!-- Partners injected by content.js -->
+    </div>
+
+    <div class="become-partner">
+      <div>
+        <h3>Become a Partner</h3>
+        <p>Interested in partnering with Old Blood? We're always looking for brands that align with our values of loyalty, performance, and community. Get in touch and let's build something together.</p>
+      </div>
+      <a href="contact.html" class="btn-red">Get in Touch <svg width="16" height="16" viewBox="0 0 20 20"><polyline fill="none" stroke="currentColor" points="10 5 15 9.5 10 14"/><line fill="none" stroke="currentColor" x1="4" y1="9.5" x2="15" y2="9.5"/></svg></a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <hr style="border:none;border-top:1px solid var(--border);">
+    <div class="footer-meta">
+      <p class="footer-copy">© Copyright 2026 — All rights reserved.<br>Old Blood™ is a registered trademark of Old Blood Esports.</p>
+      <div class="footer-links"><a href="derivative-works.html">Derivative Works</a><a href="privacy-policy.html">Privacy Policy</a><a href="resources.html">Resources</a></div>
+      <div class="footer-socials">
+        <a href="https://x.com/xyressszz784205" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6874 3.0625L12.6907 8.77425L8.37045 3.0625H2.11328L9.58961 12.8387L2.50378 20.9375H5.53795L11.0068 14.6886L15.7863 20.9375H21.8885L14.095 10.6342L20.7198 3.0625H17.6874Z"/></svg></a>
+        <a href="https://www.instagram.com/iyyykiiiiiiiim/" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+        <a href="https://www.youtube.com/@Wi_xz0" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.54 7.2c-.25-.93-.98-1.66-1.91-1.91C17.88 5 12 5 12 5s-5.88 0-7.63.29c-.93.25-1.66.98-1.91 1.91C2.17 8.95 2.17 12 2.17 12s0 3.05.29 4.8c.25.93.98 1.66 1.91 1.91C6.12 19 12 19 12 19s5.88 0 7.63-.29c.93-.25 1.66-.98 1.91-1.91.29-1.75.29-4.8.29-4.8s0-3.05-.29-4.8zM9.75 15V9l5.5 3-5.5 3z"/></svg></a>
+        <a href="https://www.tiktok.com/@its_hakimouuuuu" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.97a8.16 8.16 0 004.77 1.52V7.04a4.85 4.85 0 01-1-.35z"/></svg></a>
+        <a href="https://discord.com/users/1156188747994505216" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.014.043.031.055a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.1.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="content.js"></script>
+<script>
+  function openMenu(){document.getElementById('mobileMenu').classList.add('open');document.getElementById('mobileOverlay').classList.add('open');document.body.style.overflow='hidden'}
+  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');document.getElementById('mobileOverlay').classList.remove('open');document.body.style.overflow=''}
+</script>
+</body>
+</html>
