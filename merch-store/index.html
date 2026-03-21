@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Old Blood Store — Official Merch</title>
+<meta name="description" content="Official Old Blood Esports merchandise. Hoodies, tees, accessories and limited drops. Rep the lineage.">
+<meta property="og:title" content="Old Blood Store">
+<meta property="og:description" content="Official merch. Rep the lineage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 70% 50%, rgba(184,0,10,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 30% 30%, rgba(232,0,26,.08) 0%, transparent 60%),
+    var(--bg);
+  z-index: 0;
+}
+
+.hero-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(184,0,10,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184,0,10,.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 80px 0;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--red-hot);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--red-hot);
+}
+
+.hero-heading {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 10vw, 160px);
+  line-height: .92;
+  color: var(--cream);
+  letter-spacing: .02em;
+  margin-bottom: 32px;
+}
+.hero-heading .accent { color: var(--red-hot); }
+.hero-heading .outline {
+  -webkit-text-stroke: 1px rgba(245,230,230,.25);
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 440px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 72px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 44px;
+  color: var(--cream);
+  letter-spacing: .03em;
+  line-height: 1;
+}
+.stat-val span { color: var(--red-hot); }
+.stat-label {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+.hero-side {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 42%;
+  z-index: 1;
+  overflow: hidden;
+}
+.hero-side-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--bg) 0%, transparent 30%),
+              linear-gradient(160deg, var(--red-deep) 0%, #200010 50%, var(--bg3) 100%);
+}
+.hero-side-text {
+  position: absolute;
+  bottom: 60px;
+  left: 40px;
+  font-family: var(--font-display);
+  font-size: 160px;
+  color: rgba(184,0,10,.08);
+  line-height: 1;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  user-select: none;
+}
+.hero-badge-tag {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.hero-badge-tag svg { opacity: .15; }
+
+/* ── MARQUEE ── */
+.marquee-strip {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 14px 0;
+  background: var(--bg2);
+}
+.marquee-track {
+  display: inline-flex;
+  gap: 0;
+  animation: marquee 22s linear infinite;
+}
+.marquee-item {
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0 28px;
+}
+.marquee-item.accent { color: var(--red-hot); }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── CATEGORY GRID ── */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin: 2px 0;
+}
+
+.category-card {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  text-decoration: none;
+  background: var(--bg3);
+}
+
+.category-card-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform .6s var(--ease-out-expo);
+}
+.category-card:hover .category-card-bg { transform: scale(1.06); }
+
+.category-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8,3,3,.85) 0%, transparent 60%);
+}
+
+.category-card-body {
+  position: relative;
+  z-index: 2;
+  padding: 28px;
+  width: 100%;
+}
+.category-card-label {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--red-hot);
+  margin-bottom: 6px;
+}
+.category-card-title {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: var(--cream);
+  letter-spacing: .04em;
+  line-height: 1;
+}
+.category-card-link {
+  margin-top: 12px;
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .2s;
+}
+.category-card:hover .category-card-link { color: var(--cream); }
+
+/* ── PRODUCTS SECTION ── */
+.products-section { padding: 80px 0; }
+
+.products-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+/* ── DROPS BANNER ── */
+.drops-banner {
+  margin: 0;
+  background: linear-gradient(120deg, var(--red-deep) 0%, #1a0005 40%, var(--bg3) 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 72px 0;
+  position: relative;
+  overflow: hidden;
+}
+.drops-banner::before {
+  content: 'DROP';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: 260px;
+  color: rgba(184,0,10,.06);
+  letter-spacing: .04em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.drops-banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.drops-eyebrow {
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  color: var(--red-hot);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.drops-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 72px);
+  color: var(--cream);
+  line-height: 1;
+  letter-spacing: .03em;
+  margin-bottom: 16px;
+}
+.drops-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 360px;
+  line-height: 1.7;
+}
+
+.countdown {
+  display: flex;
+  gap: 0;
+  flex-shrink: 0;
+}
+.countdown-unit {
+  text-align: center;
+  padding: 0 20px;
+  border-right: 1px solid var(--border);
+}
+.countdown-unit:last-child { border-right: none; }
+.countdown-val {
+  font-family: var(--font-display);
+  font-size: 56px;
+  color: var(--cream);
+  letter-spacing: .04em;
+  line-height: 1;
+}
+.countdown-label {
+  font-family: var(--font-condensed);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── NEWSLETTER ── */
+.newsletter-section {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+}
+.newsletter-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.newsletter-form {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.newsletter-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 0 18px;
+  color: var(--cream);
+  font-size: 14px;
+  outline: none;
+}
+.newsletter-input::placeholder { color: var(--text-dim); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .hero-side { display: none; }
+  .hero-stats { gap: 24px; flex-wrap: wrap; }
+  .category-grid { grid-template-columns: 1fr; }
+  .drops-banner-inner { flex-direction: column; }
+  .newsletter-inner { grid-template-columns: 1fr; gap: 32px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .hero-heading { font-size: 60px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-side">
+      <div class="hero-side-bg"></div>
+      <div class="hero-side-text">OB</div>
+      <div class="hero-badge-tag">
+        <svg width="120" height="120" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--red-hot)">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+        </svg>
+      </div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Official Merchandise</div>
+        <h1 class="hero-heading">
+          WEAR<br>
+          THE <span class="accent">BLOOD</span>
+        </h1>
+        <p class="hero-sub">Every piece supports the roster. Rep the lineage — or don't wear it at all.</p>
+        <div class="hero-actions">
+          <a href="apparel.html" class="btn btn-primary btn-lg">Shop Apparel</a>
+          <a href="drops.html" class="btn btn-outline btn-lg">View Drops</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-val">8<span>+</span></div>
+            <div class="stat-label">Products</div>
+          </div>
+          <div>
+            <div class="stat-val">100<span>%</span></div>
+            <div class="stat-label">Authentic</div>
+          </div>
+          <div>
+            <div class="stat-val">48<span>h</span></div>
+            <div class="stat-label">Dispatch</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MARQUEE ── -->
+  <div class="marquee-strip">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
+
+  <!-- ── CATEGORY GRID ── -->
+  <div class="category-grid">
+    <a href="apparel.html" class="category-card">
+      <div class="category-card-bg" style="background:linear-gradient(145deg,#1a0808,#3d0010 60%,#600018);"></div>
+      <div class="category-card-overlay"></div>
+      <div class="category-card-body">
+        <div class="category-card-label">Shop</div>
+        <div class="category-card-title">APPAREL</div>
+        <div class="category-card-link">
+          Browse Collection
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
+    <a href="accessories.html" class="category-card">
+      <div class="category-card-bg" style="background:linear-gradient(145deg,#0f0404,#2a0008 60%,#450010);"></div>
+      <div class="category-card-overlay"></div>
+      <div class="category-card-body">
+        <div class="category-card-label">Shop</div>
+        <div class="category-card-title">ACCESSORIES</div>
+        <div class="category-card-link">
+          Browse Collection
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
+    <a href="drops.html" class="category-card">
+      <div class="category-card-bg" style="background:linear-gradient(145deg,#200003,#500010 60%,#800020);"></div>
+      <div class="category-card-overlay"></div>
+      <div class="category-card-body">
+        <div class="category-card-label">Limited</div>
+        <div class="category-card-title">DROPS</div>
+        <div class="category-card-link">
+          View Drops
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- ── FEATURED PRODUCTS ── -->
+  <section class="products-section">
+    <div class="container">
+      <div class="products-header">
+        <div>
+          <div class="section-label">Featured</div>
+          <h2 class="section-title">MUST HAVES</h2>
+        </div>
+        <a href="apparel.html" class="btn btn-outline">View All Products</a>
+      </div>
+      <div class="products-grid" id="featured-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── DROPS BANNER ── -->
+  <section class="drops-banner">
+    <div class="container">
+      <div class="drops-banner-inner">
+        <div>
+          <div class="drops-eyebrow">Limited Drop — Available Now</div>
+          <h2 class="drops-title">VALORANT<br>DROP TEES</h2>
+          <p class="drops-sub">VALORANT collab. Blood-red colourway. These won't get restocked — once they're gone, that's it.</p>
+          <div style="margin-top:28px;display:flex;gap:12px;">
+            <a href="drops.html" class="btn btn-primary">Get Yours Now</a>
+            <a href="product.html?id=p007" class="btn btn-outline">View Item</a>
+          </div>
+        </div>
+        <div class="countdown">
+          <div class="countdown-unit">
+            <div class="countdown-val" id="cd-h">00</div>
+            <div class="countdown-label">Hours</div>
+          </div>
+          <div class="countdown-unit">
+            <div class="countdown-val" id="cd-m">00</div>
+            <div class="countdown-label">Mins</div>
+          </div>
+          <div class="countdown-unit">
+            <div class="countdown-val" id="cd-s">00</div>
+            <div class="countdown-label">Secs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NEWSLETTER ── -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-inner">
+        <div>
+          <div class="section-label">Stay Updated</div>
+          <h2 class="section-title">GET DROP<br>ALERTS</h2>
+        </div>
+        <div>
+          <p style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:24px;">Be first to know about limited drops, restocks, and exclusive deals. No spam — only blood.</p>
+          <div class="newsletter-form">
+            <input class="newsletter-input" type="email" placeholder="your@email.com">
+            <button class="btn btn-primary" onclick="handleNewsletterSignup(this)">Notify Me</button>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:10px;">No spam. Unsubscribe any time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="store.js"></script>
+<script>
+  injectHeader('index.html');
+  injectFooter();
+
+  // Render featured products
+  document.getElementById('featured-grid').innerHTML =
+    getFeaturedProducts().map(productCardHTML).join('');
+
+  // Marquee
+  const items = ['FREE SHIPPING OVER $80', 'NEW DROPS EVERY MONTH', 'OFFICIAL OLD BLOOD MERCH', 'VALORANT DROP — LIVE NOW', 'REP THE LINEAGE', '48H DISPATCH', 'LIMITED STOCK'];
+  const track = document.getElementById('marqueeTrack');
+  const doubled = [...items, ...items];
+  track.innerHTML = doubled.map((t,i) =>
+    `<span class="marquee-item${i % 3 === 1 ? ' accent' : ''}">${t} ·</span>`
+  ).join('');
+
+  // Countdown (48 hours from now, stored in session)
+  function startCountdown() {
+    let end = sessionStorage.getItem('ob-drop-end');
+    if (!end) {
+      end = Date.now() + 48 * 3600 * 1000;
+      sessionStorage.setItem('ob-drop-end', end);
+    }
+    function tick() {
+      const diff = Math.max(0, end - Date.now());
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+      document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+      document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+  startCountdown();
+
+  function handleNewsletterSignup(btn) {
+    const input = btn.previousElementSibling;
+    if (!input.value || !input.value.includes('@')) {
+      input.style.borderLeft = '2px solid var(--red-hot)';
+      return;
+    }
+    btn.textContent = 'You\'re In!';
+    btn.style.background = '#16a34a';
+    input.value = '';
+    input.placeholder = 'Thanks — we\'ll be in touch';
+  }
+</script>
+</body>
+</html>
