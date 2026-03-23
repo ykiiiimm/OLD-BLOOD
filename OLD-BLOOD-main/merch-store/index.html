@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Old Blood Store — Official Jerseys</title>
+<meta name="description" content="Official Old Blood VALORANT jerseys. KRIXX. PH4NTM. VOLT. ZER0. RAVEN. NEXUS. Rep your player.">
+<meta property="og:title" content="Old Blood Store — Official Jerseys">
+<meta property="og:description" content="Rep your player. Official Old Blood VALORANT jerseys.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+.hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 70% at 65% 50%, rgba(184,0,10,.2) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 50% at 20% 20%, rgba(232,0,26,.07) 0%, transparent 60%),
+    var(--bg);
+}
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(184,0,10,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(184,0,10,.03) 1px,transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content { position: relative; z-index: 2; padding: 80px 0; }
+.hero-eyebrow {
+  font-family: var(--font-condensed); font-size: 11px; font-weight: 700;
+  letter-spacing: .24em; text-transform: uppercase; color: var(--red-hot);
+  margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before { content:''; display:block; width:32px; height:1px; background:var(--red-hot); }
+.hero-heading {
+  font-family: var(--font-display);
+  font-size: clamp(68px, 11vw, 160px);
+  line-height: .9;
+  color: var(--cream);
+  letter-spacing: .02em;
+  margin-bottom: 28px;
+}
+.hero-heading .red { color: var(--red-hot); }
+.hero-sub { font-size: 15px; color: var(--text-muted); max-width: 420px; line-height: 1.75; margin-bottom: 40px; }
+
+.player-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+.player-tag {
+  font-family: var(--font-condensed); font-size: 12px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; padding: 6px 14px;
+  border: 1px solid var(--border2); border-radius: 2px;
+  color: var(--text-muted); text-decoration: none; transition: all .2s;
+}
+.player-tag:hover { border-color: var(--red-hot); color: var(--red-hot); }
+
+.hero-right {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 45%; overflow: hidden;
+}
+.hero-right-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--bg) 0%, transparent 25%),
+              linear-gradient(150deg, var(--red-deep) 0%, #180006 50%, var(--bg3) 100%);
+}
+.hero-right-name {
+  position: absolute; right: -30px; bottom: 20px;
+  font-family: var(--font-display); font-size: 200px;
+  color: rgba(184,0,10,.05); letter-spacing: .06em; line-height: 1;
+  user-select: none; white-space: nowrap;
+}
+.hero-jersey-preview { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 220px; }
+
+/* marquee */
+.marquee-strip { border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;padding:13px 0;background:var(--bg2); }
+.marquee-track { display:inline-flex;animation:marquee 24s linear infinite; }
+.marquee-item { font-family:var(--font-condensed);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);padding:0 24px; }
+.marquee-item.red { color:var(--red-hot); }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* Search bar */
+.search-bar-wrap {
+  padding: 32px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.search-input-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 420px;
+}
+.search-input-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 11px 14px 11px 42px;
+  color: var(--cream);
+  font-size: 14px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color .2s;
+}
+.search-input:focus { border-color: var(--red-hot); }
+.search-input::placeholder { color: var(--text-dim); }
+.search-count {
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 0;
+  font-family: var(--font-condensed);
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* players section */
+.players-section { padding: 48px 0 80px; }
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+}
+
+/* team jersey banner */
+.team-banner {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  background: linear-gradient(110deg, #180004 0%, #0a0303 50%, var(--bg3) 100%);
+  padding: 64px 0; position: relative; overflow: hidden;
+}
+.team-banner::before {
+  content: 'OB'; position: absolute; right: 40px; top: 50%; transform: translateY(-50%);
+  font-family: var(--font-display); font-size: 260px;
+  color: rgba(184,0,10,.05); letter-spacing: .08em;
+  pointer-events: none; user-select: none;
+}
+.team-banner-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+
+/* sizing cta */
+.cta-strip {
+  padding: 48px 0; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+}
+.cta-strip-text { font-family: var(--font-display); font-size: 32px; color: var(--cream); letter-spacing: .03em; }
+.cta-strip-text span { color: var(--red-hot); }
+
+@media (max-width: 1200px) { .players-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) {
+  .hero-right { display: none; }
+  .players-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-banner-inner { flex-direction: column; }
+  .cta-strip { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) { .players-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Official VALORANT Jerseys</div>
+        <h1 class="hero-heading">REP<br>YOUR<br><span class="red">PLAYER</span></h1>
+        <p class="hero-sub">Six players. Six jerseys. Every purchase goes directly to supporting the Old Blood roster.</p>
+        <div class="player-tags" id="player-tags"></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="roster.html" class="btn btn-primary btn-lg">Shop the Roster</a>
+          <a href="product.html?id=jersey-team" class="btn btn-outline btn-lg" id="team-jersey-btn">Team Jersey</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip"><div class="marquee-track" id="marquee"></div></div>
+
+  <!-- ALL PLAYERS + SEARCH -->
+  <section class="players-section">
+    <div class="container">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div class="section-label">The Roster</div>
+          <h2 class="section-title">ALL PLAYERS</h2>
+        </div>
+        <a href="roster.html" class="btn btn-outline">Full Roster Page</a>
+      </div>
+
+      <!-- SEARCH BAR -->
+      <div class="search-bar-wrap">
+        <div class="search-input-wrap">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input
+            type="text"
+            id="player-search"
+            class="search-input"
+            placeholder="Search players… (KRIXX, VOLT, RAVEN…)"
+            oninput="filterPlayers(this.value)"
+            autocomplete="off"
+          >
+        </div>
+        <span class="search-count" id="search-count"></span>
+      </div>
+
+      <div class="players-grid" id="players-grid" style="margin-top:24px;"></div>
+    </div>
+  </section>
+
+  <!-- TEAM JERSEY BANNER -->
+  <section class="team-banner">
+    <div class="container">
+      <div class="team-banner-inner">
+        <div>
+          <div class="section-label">No player. Just the org.</div>
+          <h2 class="section-title" style="font-size:clamp(36px,5vw,72px);">TEAM<br>JERSEY</h2>
+          <p style="color:var(--text-muted);font-size:14px;max-width:380px;line-height:1.7;margin:16px 0 28px;" id="team-desc">Clean back. No player name. Just the Old Blood crest and the lineage.</p>
+          <a href="product.html?id=jersey-team" class="btn btn-primary btn-lg" id="team-cta">Get the Team Jersey</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIZING CTA -->
+  <div class="container">
+    <div class="cta-strip">
+      <div class="cta-strip-text">NOT SURE ON SIZE? <span>SIZE UP.</span></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="help.html#sizing" class="btn btn-outline">Sizing Guide</a>
+        <a href="../contact.html" class="btn btn-ghost">Ask Us</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="../content.js"></script>
+<script src="store.js"></script>
+<script>
+  injectHeader('index.html');
+  injectFooter();
+
+  // Player tags in hero
+  document.getElementById('player-tags').innerHTML = ROSTER.map(p =>
+    `<a href="product.html?id=jersey-${p.id}" class="player-tag">${p.name}</a>`
+  ).join('');
+
+  // Update team jersey button label with price
+  document.getElementById('team-jersey-btn').textContent = `Team Jersey — $${_teamPrice}`;
+
+  // Team jersey CTA with price
+  document.getElementById('team-cta').textContent = `Get the Team Jersey — $${_teamPrice}`;
+
+  // Team desc
+  document.getElementById('team-desc').textContent =
+    `${_teamJersey.description} $${_teamPrice}.`;
+
+
+
+  // Build all roster cards once
+  const allCards = ROSTER.map(p => ({ player: p, html: rosterCardHTML(p) }));
+
+  function renderGrid(cards) {
+    const grid = document.getElementById('players-grid');
+    if (cards.length === 0) {
+      grid.innerHTML = '<div class="no-results">No players found. Try a different name.</div>';
+    } else {
+      grid.innerHTML = cards.map(c => c.html).join('');
+    }
+    const countEl = document.getElementById('search-count');
+    if (countEl) {
+      countEl.textContent = cards.length < allCards.length
+        ? `${cards.length} of ${allCards.length} players`
+        : `${allCards.length} players`;
+    }
+  }
+
+  function filterPlayers(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) {
+      renderGrid(allCards);
+      return;
+    }
+    const filtered = allCards.filter(c =>
+      c.player.name.toLowerCase().includes(q) ||
+      c.player.role.toLowerCase().includes(q) ||
+      c.player.bio.toLowerCase().includes(q)
+    );
+    renderGrid(filtered);
+  }
+
+  // Initial render
+  renderGrid(allCards);
+
+  // Marquee
+  const items = ROSTER.map(p => `${p.name} — ${p.role.toUpperCase()}`);
+  items.push('OLD BLOOD VALORANT', 'OFFICIAL JERSEYS', `$${_playerPrice} EACH`);
+  const doubled = [...items, ...items];
+  document.getElementById('marquee').innerHTML = doubled.map((t,i) =>
+    `<span class="marquee-item${i%4===2?' red':''}">${t} &nbsp;·&nbsp; </span>`
+  ).join('');
+</script>
+</body>
+</html>

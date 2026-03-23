@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Roster — Old Blood Store</title>
+<meta name="description" content="KRIXX. PH4NTM. VOLT. ZER0. RAVEN. NEXUS. Get their official Old Blood VALORANT jerseys.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+.roster-hero {
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, rgba(58,0,4,.25) 0%, transparent 100%);
+  position: relative; overflow: hidden;
+}
+.roster-hero::after {
+  content: 'ROSTER'; position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+  font-family: var(--font-display); font-size: 200px;
+  color: rgba(184,0,10,.04); letter-spacing: .06em;
+  pointer-events: none; user-select: none;
+}
+.roster-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; padding: 48px 0 80px;
+}
+.player-stat-row {
+  display: flex; gap: 40px; margin-top: 32px;
+  padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap;
+}
+.player-stat .val { font-family: var(--font-display); font-size: 36px; color: var(--cream); line-height: 1; }
+.player-stat .val span { color: var(--red-hot); }
+.player-stat .lbl {
+  font-family: var(--font-condensed); font-size: 10px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--text-dim); margin-top: 4px;
+}
+@media (max-width: 900px) { .roster-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .roster-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<main>
+  <section class="roster-hero">
+    <div class="container">
+      <div class="section-label">Old Blood VALORANT</div>
+      <h1 class="section-title" style="font-size:clamp(52px,9vw,120px);line-height:.92;">THE<br>ROSTER</h1>
+      <p style="color:var(--text-muted);font-size:15px;max-width:500px;line-height:1.75;margin-top:16px;">Six players. One org. Each jersey is specific to that player — their name on the back, their role, their legacy. Pick your player.</p>
+      <div class="player-stat-row">
+        <div class="player-stat"><div class="val" id="stat-players">6<span></span></div><div class="lbl">Players</div></div>
+        <div class="player-stat"><div class="val" id="stat-price">$80<span></span></div><div class="lbl">Per Jersey</div></div>
+        <div class="player-stat"><div class="val">5<span></span></div><div class="lbl">Sizes</div></div>
+        <div class="player-stat"><div class="val">48<span>h</span></div><div class="lbl">Dispatch</div></div>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <div class="roster-grid" id="roster-grid"></div>
+  </div>
+  <!-- Team jersey upsell -->
+  <div style="border-top:1px solid var(--border);padding:60px 0;background:var(--bg2);">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;">
+      <div>
+        <div class="section-label">No favourite? No problem.</div>
+        <h2 class="section-title" style="font-size:clamp(28px,4vw,52px);">GRAB THE TEAM JERSEY</h2>
+        <p style="color:var(--text-muted);font-size:14px;max-width:400px;line-height:1.7;margin-top:12px;" id="team-upsell-desc">Same tournament-grade fabric. Just the Old Blood crest — no player name.</p>
+      </div>
+      <a href="product.html?id=jersey-team" class="btn btn-primary btn-lg" id="team-upsell-btn">Shop Team Jersey</a>
+    </div>
+  </div>
+</main>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="../content.js"></script>
+<script src="store.js"></script>
+<script>
+  injectHeader('roster.html');
+  injectFooter();
+  document.getElementById('roster-grid').innerHTML = ROSTER.map(rosterCardHTML).join('');
+  // Update stats from content.js data
+  document.getElementById('stat-players').innerHTML = `${ROSTER.length}<span></span>`;
+  document.getElementById('stat-price').innerHTML = `$${_playerPrice}<span></span>`;
+  document.getElementById('team-upsell-btn').textContent = `Shop Team Jersey — $${_teamPrice}`;
+  document.getElementById('team-upsell-desc').textContent =
+    `Same tournament-grade fabric. Just the Old Blood crest — no player name. $${_teamPrice}.`;
+</script>
+</body>
+</html>

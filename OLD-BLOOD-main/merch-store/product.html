@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jersey — Old Blood Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+.product-page { padding: 48px 0 80px; }
+.breadcrumb { display:flex;align-items:center;gap:8px;font-family:var(--font-condensed);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:36px; }
+.breadcrumb a { transition:color .2s; } .breadcrumb a:hover { color:var(--cream); }
+.breadcrumb span { color:var(--text-muted); }
+
+.product-layout { display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start; }
+
+.product-gallery { position:sticky;top:80px; }
+.gallery-main {
+  aspect-ratio: 3/4;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  position: relative;
+}
+.gallery-thumbs { display:grid;grid-template-columns:repeat(4,1fr);gap:8px; }
+.gallery-thumb {
+  aspect-ratio:1;background:var(--bg3);border:1px solid var(--border);
+  border-radius:4px;cursor:pointer;transition:border-color .2s;overflow:hidden;
+}
+.gallery-thumb.active { border-color:var(--red-hot); }
+
+.product-info-role {
+  font-family:var(--font-condensed);font-size:11px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;
+}
+.product-info-name {
+  font-family:var(--font-display);font-size:clamp(36px,4vw,60px);
+  color:var(--cream);line-height:1;letter-spacing:.03em;margin-bottom:6px;
+}
+.product-info-sub {
+  font-family:var(--font-condensed);font-size:15px;font-weight:500;
+  color:var(--text-muted);letter-spacing:.04em;margin-bottom:20px;
+}
+.product-info-price {
+  font-family:var(--font-display);font-size:44px;
+  color:var(--cream);letter-spacing:.02em;margin-bottom:28px;
+}
+.product-info-desc {
+  font-size:14px;color:var(--text-muted);line-height:1.8;
+  margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border);
+}
+
+.info-label {
+  font-family:var(--font-condensed);font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);
+  margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;
+}
+.info-label a { color:var(--red-hot);font-size:10px; }
+.size-grid-full { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px; }
+.size-btn-full {
+  min-width:54px;height:48px;padding:0 14px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--font-condensed);font-size:13px;
+  font-weight:700;letter-spacing:.08em;border:1px solid var(--border2);
+  border-radius:4px;background:transparent;color:var(--text);cursor:pointer;transition:all .15s;
+}
+.size-btn-full:hover { border-color:var(--red-hot);color:var(--red-hot); }
+.size-btn-full.active { background:var(--red-hot);border-color:var(--red-hot);color:#fff; }
+
+.qty-row { display:flex;align-items:center;gap:12px;margin-bottom:20px; }
+.qty-ctrl { display:flex;align-items:center;border:1px solid var(--border2);border-radius:4px;overflow:hidden; }
+.qty-btn-lg { width:44px;height:44px;background:transparent;border:none;color:var(--text-muted);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s; }
+.qty-btn-lg:hover { color:var(--cream);background:var(--surface); }
+.qty-val-lg { width:48px;text-align:center;font-family:var(--font-condensed);font-size:16px;font-weight:700;color:var(--cream);border-left:1px solid var(--border);border-right:1px solid var(--border);line-height:44px; }
+
+.guarantees { display:flex;gap:20px;flex-wrap:wrap;padding:18px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:24px; }
+.guarantee-item { display:flex;align-items:center;gap:8px;font-family:var(--font-condensed);font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--text-muted); }
+
+.accordion { border-top:1px solid var(--border); }
+.acc-item { border-bottom:1px solid var(--border); }
+.acc-btn { width:100%;background:none;border:none;padding:15px 0;display:flex;align-items:center;justify-content:space-between;cursor:pointer;color:var(--cream);font-family:var(--font-condensed);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-align:left; }
+.acc-btn svg { color:var(--text-muted);transition:transform .2s;flex-shrink:0; }
+.acc-btn.open svg { transform:rotate(180deg); }
+.acc-body { max-height:0;overflow:hidden;transition:max-height .3s ease;font-size:13px;color:var(--text-muted);line-height:1.8; }
+.acc-body.open { max-height:400px;padding-bottom:14px; }
+.acc-body li { padding:3px 0;display:flex;align-items:flex-start;gap:8px; }
+.acc-body li::before { content:'—';color:var(--red-dim);flex-shrink:0; }
+
+.other-players { padding:64px 0;border-top:1px solid var(--border); }
+.other-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:28px; }
+
+@media (max-width:1024px) { .product-layout { grid-template-columns:1fr;gap:36px; } .product-gallery { position:static; } .other-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:480px) { .other-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<main>
+  <div class="container product-page">
+    <div class="breadcrumb" id="breadcrumb"></div>
+    <div class="product-layout" id="product-layout"></div>
+  </div>
+  <section class="other-players">
+    <div class="container">
+      <div class="section-label">More from the roster</div>
+      <h2 class="section-title" style="font-size:36px;">OTHER PLAYERS</h2>
+      <div class="other-grid" id="other-grid"></div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="../content.js"></script>
+<script src="store.js"></script>
+<script>
+  injectHeader('');
+  injectFooter();
+
+  const params = new URLSearchParams(location.search);
+  const pid = params.get('id') || 'jersey-' + ROSTER[0].id;
+  const product = getProductById(pid) || PRODUCTS[0];
+  const accent = product.accent || '#e8001a';
+  const accentDim = product.accentDim || '#7a0008';
+
+  document.title = `${product.name} — Old Blood Store`;
+
+  document.getElementById('breadcrumb').innerHTML = `
+    <a href="index.html">Store</a>
+    <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <a href="roster.html">Roster</a>
+    <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <span>${product.playerName || 'Team'}</span>`;
+
+  let selectedSize = '';
+  let qty = 1;
+
+  function sizeBtnsHTML() {
+    return product.sizes.map(s => `
+      <button class="size-btn-full${selectedSize===s?' active':''}" onclick="selectSize('${s}')">${s}</button>
+    `).join('');
+  }
+
+  function selectSize(s) {
+    selectedSize = s;
+    document.getElementById('size-error').style.display = 'none';
+    document.getElementById('size-grid').innerHTML = sizeBtnsHTML();
+    document.getElementById('selected-size-label').textContent = s;
+  }
+
+  function changeQtyLocal(d) {
+    qty = Math.max(1, qty + d);
+    document.getElementById('qty-display').textContent = qty;
+  }
+
+  function handleAddToCart() {
+    if (!selectedSize) {
+      document.getElementById('size-error').style.display = 'block';
+      return;
+    }
+    for (let i = 0; i < qty; i++) {
+      addToCart({
+        id: product.id, name: product.name,
+        playerName: product.playerName,
+        price: product.price,
+        category: product.category,
+        size: selectedSize, color: product.color,
+      });
+    }
+  }
+
+  function toggleAcc(btn) {
+    btn.classList.toggle('open');
+    btn.nextElementSibling.classList.toggle('open');
+  }
+
+  // Gallery logic
+  const galleryImages = [];
+  if (product.img) galleryImages.push(product.img);
+  if (product.backImg) galleryImages.push(product.backImg);
+  
+  // Add mocks if it's the team jersey
+  if (product.id === 'jersey-team') {
+    galleryImages.push('images/team jersey mock 1.png');
+    galleryImages.push('images/team jersey mock 2.png');
+    galleryImages.push('images/team jersey mock 3.png');
+  }
+
+  function renderGallery(index = 0) {
+    const mainEl = document.getElementById('gallery-main');
+    const thumbsEl = document.getElementById('gallery-thumbs');
+    if (!mainEl || !thumbsEl) return;
+
+    if (galleryImages.length > 0) {
+      const src = galleryImages[index];
+      mainEl.innerHTML = `<img src="${src}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">`;
+      thumbsEl.innerHTML = galleryImages.map((img, i) => `
+        <div class="gallery-thumb${i===index?' active':''}" onclick="renderGallery(${i})">
+          <img src="${img}" style="width:100%;height:100%;object-fit:cover;">
+        </div>`).join('');
+    } else {
+      mainEl.innerHTML = jerseyPlaceholderSVG(product.playerName, accent, accentDim);
+      thumbsEl.innerHTML = [0,1,2,3].map(i => `
+        <div class="gallery-thumb${i===0?' active':''}">
+          ${jerseyPlaceholderSVG(product.playerName, accent, accentDim)}
+        </div>`).join('');
+    }
+  }
+
+  document.getElementById('product-layout').innerHTML = `
+    <div class="product-gallery">
+      <div class="gallery-main" id="gallery-main" style="background:${accentDim}22;"></div>
+      <div class="gallery-thumbs" id="gallery-thumbs"></div>
+    </div>
+
+    <div class="product-info">
+      ${product.playerRole ? `<div class="product-info-role" style="color:${accent};">${product.playerRole}</div>` : ''}
+      <h1 class="product-info-name">${product.playerName || 'OLD BLOOD'}</h1>
+      <div class="product-info-sub">Official Player Jersey</div>
+      <div class="product-info-price">$${product.price.toFixed(2)}</div>
+      <p class="product-info-desc">${product.description}</p>
+
+      <div class="info-label">
+        Select Size
+        <span id="selected-size-label" style="color:var(--cream);font-family:var(--font-condensed);font-size:12px;font-weight:700;"></span>
+        <a href="help.html#sizing">Size Guide</a>
+      </div>
+      <div class="size-grid-full" id="size-grid">${sizeBtnsHTML()}</div>
+      <div id="size-error" style="display:none;color:var(--red-hot);font-family:var(--font-condensed);font-size:12px;font-weight:600;letter-spacing:.08em;margin-bottom:14px;margin-top:-18px;">Please select a size</div>
+
+      <div class="info-label" style="margin-bottom:10px;">Quantity</div>
+      <div class="qty-row">
+        <div class="qty-ctrl">
+          <button class="qty-btn-lg" onclick="changeQtyLocal(-1)">−</button>
+          <span class="qty-val-lg" id="qty-display">1</span>
+          <button class="qty-btn-lg" onclick="changeQtyLocal(1)">+</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:20px;">
+        <button class="btn btn-primary btn-lg" style="flex:1;background:${accent};border-color:${accent};" onclick="handleAddToCart()">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          Add to Cart — $${product.price.toFixed(2)}
+        </button>
+        <button class="btn btn-outline wishlist-btn${isInWishlist(product.id) ? ' active' : ''}" 
+                data-wishlist-id="${product.id}"
+                onclick="toggleWishlist('${product.id}')"
+                title="Wishlist">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </button>
+      </div>
+
+      <div class="guarantees">
+        <div class="guarantee-item"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="${accent}"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Free shipping over $${_s ? _s.freeShippingOver : 80}</div>
+        <div class="guarantee-item"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="${accent}"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>30-day returns</div>
+        <div class="guarantee-item"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="${accent}"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>Secure checkout</div>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-btn" onclick="toggleAcc(this)">Jersey Details <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+          <div class="acc-body"><ul>${product.details.map(d=>`<li>${d}</li>`).join('')}</ul></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-btn" onclick="toggleAcc(this)">Sizing &amp; Fit <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+          <div class="acc-body"><ul><li>Jerseys run slim — size up if between sizes</li><li>S (95cm chest), M (100cm), L (106cm), XL (112cm), 2XL (118cm)</li><li>Length: S (68cm), M (71cm), L (74cm), XL (77cm)</li></ul></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-btn" onclick="toggleAcc(this)">Shipping &amp; Returns <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+          <div class="acc-body"><ul><li>Standard: 3–7 business days</li><li>Express: 1–3 business days</li><li>Free standard shipping on orders over $${_s ? _s.freeShippingOver : 80}</li><li>30-day returns on unworn items with tags attached</li></ul></div>
+        </div>
+      </div>
+    </div>`;
+
+  renderGallery();
+
+  const others = PRODUCTS.filter(p => p.id !== product.id && p.playerName !== null).slice(0, 4);
+  document.getElementById('other-grid').innerHTML = others.map(productCardHTML).join('');
+</script>
+</body>
+</html>

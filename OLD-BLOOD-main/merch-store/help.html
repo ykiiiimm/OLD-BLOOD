@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help & Info — Old Blood Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+.help-page { padding: 48px 0 80px; }
+.help-layout { display: grid; grid-template-columns: 280px 1fr; gap: 64px; align-items: start; }
+.help-nav { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 4px; }
+.help-nav-btn {
+  background: none; border: none; padding: 12px 16px; text-align: left;
+  font-family: var(--font-condensed); font-size: 14px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+  border-radius: var(--radius); transition: all .2s; cursor: pointer;
+}
+.help-nav-btn:hover { color: var(--cream); background: var(--bg2); }
+.help-nav-btn.active { color: var(--red-hot); background: rgba(184,0,10,.1); }
+
+.help-content { max-width: 680px; }
+.help-section { display: none; }
+.help-section.active { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+.help-title { font-family: var(--font-display); font-size: 64px; color: var(--cream); line-height: 1; margin-bottom: 32px; letter-spacing: .02em; }
+.help-section h2 { font-family: var(--font-display); font-size: 32px; color: var(--cream); margin-bottom: 24px; letter-spacing: .04em; }
+.help-section p { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+
+.sizing-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-family: var(--font-condensed); }
+.sizing-table th { text-align: left; padding: 12px; border-bottom: 1px solid var(--border2); color: var(--text-muted); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.sizing-table td { padding: 14px 12px; border-bottom: 1px solid var(--border); color: var(--cream); font-size: 14px; }
+
+@media (max-width: 900px) { .help-layout { grid-template-columns: 1fr; gap: 40px; } .help-nav { position: static; flex-direction: row; overflow-x: auto; padding-bottom: 12px; } .help-nav-btn { white-space: nowrap; } }
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<main>
+  <div class="container help-page">
+    <div class="help-layout">
+      <aside class="help-nav">
+        <button class="help-nav-btn active" onclick="showSection('sizing', this)">Sizing Guide</button>
+        <button class="help-nav-btn" onclick="showSection('shipping', this)">Shipping Info</button>
+        <button class="help-nav-btn" onclick="showSection('returns', this)">Returns & Exchange</button>
+        <button class="help-nav-btn" onclick="location.href='../contact.html'">Contact Us</button>
+      </aside>
+      <div class="help-content">
+        <h1 class="help-title">HELP & <span style="color:var(--red-hot);">INFO</span></h1>
+        
+        <!-- SIZING -->
+        <section id="sizing" class="help-section active">
+          <h2>SIZING GUIDE</h2>
+          <p>Our jerseys are designed for a professional, athletic fit. If you prefer a looser feel or are between sizes, we strongly recommend <strong>sizing up</strong>.</p>
+          <table class="sizing-table">
+            <thead>
+              <tr><th>Size</th><th>Chest (cm)</th><th>Length (cm)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Small</td><td>95</td><td>68</td></tr>
+              <tr><td>Medium</td><td>100</td><td>71</td></tr>
+              <tr><td>Large</td><td>106</td><td>74</td></tr>
+              <tr><td>XL</td><td>112</td><td>77</td></tr>
+              <tr><td>2XL</td><td>118</td><td>80</td></tr>
+            </tbody>
+          </table>
+          <p>Measurements are taken with the garment laying flat. Sublimation prints may have a 1-2cm tolerance.</p>
+        </section>
+
+        <!-- SHIPPING -->
+        <section id="shipping" class="help-section">
+          <h2>SHIPPING INFO</h2>
+          <p>We ship worldwide from our fulfillment centers in Asia and Europe. Orders are typically processed within 2–3 business days.</p>
+          <ul style="color:var(--text-muted); line-height:2; margin-bottom:20px; list-style:inside disc;">
+            <li><strong>Standard Shipping:</strong> 7–14 business days (Free over $80)</li>
+            <li><strong>Express Shipping:</strong> 3–5 business days via DHL/FedEx</li>
+          </ul>
+          <p>Tracking information will be sent to your email as soon as the package is dispatched.</p>
+        </section>
+
+        <!-- RETURNS -->
+        <section id="returns" class="help-section">
+          <h2>RETURNS & EXCHANGE</h2>
+          <p>Your satisfaction is our priority. If your jersey doesn't fit or has a defect, you can return it within 30 days of delivery.</p>
+          <p><strong>Conditions for return:</strong></p>
+          <ul style="color:var(--text-muted); line-height:2; margin-bottom:20px; list-style:inside disc;">
+            <li>Item must be unworn and unwashed.</li>
+            <li>All original tags must be attached.</li>
+            <li>Customized items (if applicable) cannot be returned unless defective.</li>
+          </ul>
+          <p>To start a return, please contact our support team at <a href="mailto:support@oldblood.gg" style="color:var(--red-hot);">support@oldblood.gg</a>.</p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="../content.js"></script>
+<script src="store.js"></script>
+<script>
+  injectHeader('');
+  injectFooter();
+
+  function showSection(id, btn) {
+    const section = document.getElementById(id);
+    if (!section) return;
+
+    document.querySelectorAll('.help-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.help-nav-btn').forEach(b => b.classList.remove('active'));
+    
+    section.classList.add('active');
+    
+    if (btn) {
+      btn.classList.add('active');
+    } else {
+      // Find button by text matching the ID
+      const targetBtn = Array.from(document.querySelectorAll('.help-nav-btn')).find(b => 
+        b.textContent.toLowerCase().includes(id.toLowerCase())
+      );
+      if (targetBtn) targetBtn.classList.add('active');
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function handleHash() {
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      showSection(hash);
+    }
+  }
+
+  window.addEventListener('hashchange', handleHash);
+  
+  // Initial load
+  document.addEventListener('DOMContentLoaded', () => {
+    handleHash();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wishlist — Old Blood Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+.wishlist-page { padding: 48px 0 80px; min-height: 60vh; }
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+}
+@media (max-width: 1024px) { .wishlist-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .wishlist-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<main>
+  <div class="container wishlist-page">
+    <div class="section-label">Your Selection</div>
+    <h1 class="section-title" style="margin-bottom:12px;">WISHLIST</h1>
+    <p style="color:var(--text-muted);font-size:14px;max-width:480px;line-height:1.7;">Your saved items are kept here for your next session. Support the roster by repping your favorites.</p>
+    
+    <div class="wishlist-grid" id="wishlist-grid"></div>
+  </div>
+</main>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="../content.js"></script>
+<script src="store.js"></script>
+<script>
+  injectHeader('');
+  injectFooter();
+  renderWishlistItems('wishlist-grid');
+
+  // Override toggleWishlist to re-render grid if we are on this page
+  const originalToggle = toggleWishlist;
+  window.toggleWishlist = (id) => {
+    originalToggle(id);
+    renderWishlistItems('wishlist-grid');
+  };
+</script>
+</body>
+</html>
