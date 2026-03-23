@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the Lineage | Old Blood</title>
+  <meta name="description" content="The blood runs deep. Join the Old Blood lineage.">
+  <link rel="icon" href="logo.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #b8000a; --primary-bright: #e8001a; --secondary: #f5e6e6;
+      --body: #d4c0c0; --background: #0a0404; --surface: #110808; --border: #2a0f0f;
+      --font-display: 'Bebas Neue', sans-serif; --font-body: 'Roboto', sans-serif;
+      --spacing: 40px; --container: 1440px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--background); color: var(--body); font-family: var(--font-body); font-size: 13px; line-height: 1.6; overflow-x: hidden; }
+    
+    /* Subtle noise texture */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.4;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ── NAV (Shared baseline) ── */
+    header { position: sticky; top: 0; z-index: 1000; background: var(--background); border-bottom: 1px solid var(--border); }
+    .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px var(--spacing); max-width: var(--container); margin: 0 auto; }
+    .logo-wordmark { display: flex; align-items: center; gap: 10px; }
+    .logo-text { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.08em; color: var(--secondary); line-height: 1; }
+    .logo-text span { color: var(--primary-bright); }
+    .nav-socials { display: flex; align-items: center; gap: 14px; }
+    .nav-socials a { color: var(--body); opacity: 0.6; transition: opacity 0.2s, color 0.2s; display: flex; align-items: center; }
+    .nav-socials a:hover { opacity: 1; color: var(--primary-bright); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--body); padding: 4px; }
+    .bottom-nav { border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--spacing); max-width: var(--container); margin: 0 auto; }
+    .nav-links { display: flex; align-items: center; }
+    .nav-links li { position: relative; }
+    .nav-links a { display: flex; align-items: center; gap: 6px; padding: 13px 16px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--body); transition: color 0.2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--primary-bright); }
+    .nav-actions { display: flex; align-items: center; }
+    .nav-actions a { display: flex; align-items: center; gap: 6px; padding: 13px 16px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--body); transition: color 0.2s; }
+    .nav-actions a:hover { color: var(--primary-bright); }
+
+    /* ── JOIN THE LINEAGE CONTENT ── */
+    .hero-split {
+      display: grid; grid-template-columns: 1fr 1fr; min-height: 600px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-text-side {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px var(--spacing);
+      background: linear-gradient(135deg, rgba(16,8,8,1) 0%, rgba(10,4,4,1) 100%);
+    }
+    .hero-text-side h1 {
+      font-family: var(--font-display); font-size: clamp(60px, 8vw, 110px);
+      line-height: 0.9; letter-spacing: 0.04em; color: var(--secondary); margin-bottom: 24px;
+    }
+    .hero-text-side h1 span { color: var(--primary-bright); }
+    .hero-text-side p {
+      font-size: 16px; max-width: 500px; color: var(--body); opacity: 0.7; line-height: 1.7;
+    }
+
+    .hero-visual-side {
+      position: relative; overflow: hidden;
+      background: #000;
+    }
+    .hero-visual-side img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(0.7) contrast(1.1);
+    }
+    .hero-visual-side::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--background) 0%, transparent 20%);
+    }
+
+    .join-sections { padding: 80px 0; }
+    .join-section { margin-bottom: 80px; }
+    .section-title {
+      font-family: var(--font-display); font-size: 42px; color: var(--secondary);
+      margin-bottom: 32px; letter-spacing: 0.04em;
+    }
+    .section-title::after {
+      content: ''; display: block; width: 40px; height: 3px; background: var(--primary-bright); margin-top: 10px;
+    }
+
+    .join-items-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+      background: var(--border);
+    }
+    .join-item-card {
+      background: var(--surface); padding: 40px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .join-item-card:hover { background: #1a0808; transform: translateY(-4px); }
+    .item-title {
+      font-family: var(--font-display); font-size: 28px; color: var(--primary-bright);
+      margin-bottom: 12px; letter-spacing: 0.05em;
+    }
+    .item-desc { font-size: 14px; color: var(--body); opacity: 0.8; line-height: 1.6; }
+
+    .cta-strip {
+      background: linear-gradient(45deg, #1a0002 0%, #3d0006 50%, #1a0002 100%);
+      padding: 100px var(--spacing); text-align: center;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .cta-content { max-width: 700px; margin: 0 auto; }
+    .cta-content h2 { font-family: var(--font-display); font-size: 64px; color: var(--secondary); margin-bottom: 20px; }
+    .cta-content p { font-size: 16px; color: var(--body); margin-bottom: 40px; opacity: 0.8; }
+    
+    .btn-group { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    .primary-btn {
+      background: var(--primary-bright); color: #fff;
+      padding: 16px 40px; font-family: var(--font-display); font-size: 20px;
+      letter-spacing: 0.1em; transition: background 0.2s, transform 0.2s;
+    }
+    .primary-btn:hover { background: #ff1a35; transform: scale(1.05); }
+    .secondary-btn {
+      background: rgba(255,255,255,0.05); color: var(--secondary);
+      padding: 16px 40px; font-family: var(--font-display); font-size: 20px;
+      letter-spacing: 0.1em; border: 1px solid var(--border);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .secondary-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--primary-bright); }
+
+    /* ── MOBILE MENU (Basics) ── */
+    .mobile-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1100; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .mobile-overlay.open { opacity: 1; pointer-events: all; }
+    .mobile-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: var(--surface); border-left: 1px solid var(--border); z-index: 1200; padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; transition: right 0.3s; }
+    .mobile-menu.open { right: 0; }
+    .mobile-nav-links a { display: block; padding: 12px 0; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    footer { border-top: 1px solid var(--border); margin-top: 80px; padding: 32px var(--spacing); }
+    .footer-inner { max-width: var(--container); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .footer-copy { font-size: 11px; color: #4a3030; }
+
+    @media (max-width: 960px) {
+      .nav-links, .nav-actions, .nav-socials { display: none; }
+      .hamburger { display: flex; }
+      .hero-split { grid-template-columns: 1fr; }
+      .join-items-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="news.html">News</a>
+    <a href="partners.html">Partners</a>
+    <a href="teams.html">Teams</a>
+    <a href="creators.html">Creators</a>
+    <a href="contact.html">Contact</a>
+    <a href="merch-store/index.html">Merch Store</a>
+    <a href="join-the-lineage.html" style="color:var(--primary-bright)">Join the Lineage</a>
+  </nav>
+</div>
+
+<header>
+  <div class="top-bar">
+    <a href="index.html" class="logo-wordmark">
+      <img src="logo.jpeg" alt="Old Blood" style="height:48px;width:auto;object-fit:contain;">
+      <span class="logo-text">OLD <span>BLOOD</span></span>
+    </a>
+    <div class="nav-socials">
+      <!-- Standard socials -->
+      <a href="https://x.com/xyressszz784205" target="_blank"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6874 3.0625L12.6907 8.77425L8.37045 3.0625H2.11328L9.58961 12.8387L2.50378 20.9375H5.53795L11.0068 14.6886L15.7863 20.9375H21.8885L14.095 10.6342L20.7198 3.0625H17.6874Z"/></svg></a>
+      <button class="hamburger" onclick="openMenu()"><svg width="22" height="22" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" fill="currentColor"/><rect y="9" width="20" height="2" fill="currentColor"/><rect y="15" width="20" height="2" fill="currentColor"/></svg></button>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="partners.html">Partners</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="creators.html">Creators</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="merch-store/index.html">Merch Store</a>
+      <a href="join-the-lineage.html" style="color:var(--primary-bright)">Join the Lineage</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero-split">
+    <div class="hero-text-side">
+      <h1 id="joinHeroTitle">JOIN THE <span>LINEAGE</span></h1>
+      <p id="joinHeroSubtitle">The blood runs deep. We are looking for the next generation of champions.</p>
+    </div>
+    <div class="hero-visual-side">
+      <img src="pappapapap.webp" alt="Old Blood Team" onerror="this.src='hero_3.jpeg'">
+    </div>
+  </section>
+
+  <div class="container" style="max-width:var(--container); margin:0 auto; padding: 0 var(--spacing);">
+    <div class="join-sections" id="joinSectionsGrid">
+      <!-- Content injected by content.js -->
+    </div>
+  </div>
+
+  <section class="cta-strip">
+    <div class="cta-content">
+      <h2 id="joinCtaTitle">READY TO COMMIT?</h2>
+      <p id="joinCtaDesc">Join our Discord to stay updated or submit a formal application.</p>
+      <div class="btn-group">
+        <a id="joinApplyLink" href="contact.html" class="primary-btn">APPLY NOW</a>
+        <a id="joinDiscordLink" href="#" target="_blank" class="secondary-btn">JOIN DISCORD</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p class="footer-copy">© Copyright 2026 — All rights reserved. Old Blood™</p>
+    <div class="footer-links" style="display:flex; gap:16px; font-size:11px; text-transform:uppercase;">
+      <a href="privacy-policy.html" style="color:#4a3030">Privacy Policy</a>
+      <a href="contact.html" style="color:#4a3030">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script>
+  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); document.getElementById('mobileOverlay').classList.add('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.getElementById('mobileOverlay').classList.remove('open'); }
+</script>
+</body>
+</html>

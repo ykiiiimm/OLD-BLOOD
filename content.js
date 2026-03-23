@@ -380,6 +380,38 @@ const OB = {
       },
     ],
   },
+  
+  // ── JOIN THE LINEAGE PAGE (join-the-lineage.html) ──────────
+  joinTheLineage: {
+    hero: {
+      title: 'JOIN THE <span>LINEAGE</span>',
+      subtitle: 'The blood runs deep. We are looking for the next generation of champions, creators, and visionaries.',
+    },
+    sections: [
+      {
+        title: 'Requirements',
+        items: [
+          { title: 'Dedication', desc: 'Unwavering commitment to the grind and the organization.' },
+          { title: 'Skill', desc: 'Top-tier performance in your respective field (Competitive / Creative).' },
+          { title: 'Loyalty', desc: 'Respect for the lineage and the bonds we build.' },
+        ]
+      },
+      {
+        title: 'Benefits',
+        items: [
+          { title: 'Exclusivity', desc: 'Access to the OG inner circle and private Discord channels.' },
+          { title: 'Growth', desc: 'Direct support for your personal brand and competitive career.' },
+          { title: 'Legacy', desc: 'A permanent place in the Old Blood history books.' },
+        ]
+      }
+    ],
+    cta: {
+      title: 'READY TO COMMIT?',
+      desc: 'Join our Discord to stay updated on recruitment cycles or submit a formal application below.',
+      discordUrl: 'https://discord.com/users/1156188747994505216',
+      applyUrl: 'contact.html'
+    }
+  },
 
 };
 
@@ -628,7 +660,6 @@ function renderPartners() {
     </div>`).join('');
 }
 
-// ─── CREATORS PAGE RENDERER ───────────────────────────────────
 function renderCreators() {
   const grid = document.getElementById('creatorsGrid');
   if (!grid) return;
@@ -641,6 +672,41 @@ function renderCreators() {
         <div class="creator-desc">${c.desc}</div>
       </div>
     </div>`).join('');
+}
+
+// ─── JOIN THE LINEAGE RENDERER ────────────────────────────────
+function renderJoinTheLineage() {
+  const heroTitle = document.getElementById('joinHeroTitle');
+  const heroSubtitle = document.getElementById('joinHeroSubtitle');
+  if (heroTitle) heroTitle.innerHTML = OB.joinTheLineage.hero.title;
+  if (heroSubtitle) heroSubtitle.textContent = OB.joinTheLineage.hero.subtitle;
+
+  const sectionsGrid = document.getElementById('joinSectionsGrid');
+  if (sectionsGrid) {
+    sectionsGrid.innerHTML = OB.joinTheLineage.sections.map(sec => `
+      <div class="join-section">
+        <h2 class="section-title">${sec.title}</h2>
+        <div class="join-items-grid">
+          ${sec.items.map(item => `
+            <div class="join-item-card">
+              <h3 class="item-title">${item.title}</h3>
+              <p class="item-desc">${item.desc}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const ctaTitle = document.getElementById('joinCtaTitle');
+  const ctaDesc = document.getElementById('joinCtaDesc');
+  const discordLink = document.getElementById('joinDiscordLink');
+  const applyLink = document.getElementById('joinApplyLink');
+
+  if (ctaTitle) ctaTitle.textContent = OB.joinTheLineage.cta.title;
+  if (ctaDesc) ctaDesc.textContent = OB.joinTheLineage.cta.desc;
+  if (discordLink) discordLink.href = OB.joinTheLineage.cta.discordUrl;
+  if (applyLink) applyLink.href = OB.joinTheLineage.cta.applyUrl;
 }
 
 // ─── NEWS FILTER (Re-renders for correct layout) ───────────
@@ -674,4 +740,5 @@ document.addEventListener('DOMContentLoaded', () => {
   renderValorant();
   renderPartners();
   renderCreators();
+  renderJoinTheLineage();
 });
