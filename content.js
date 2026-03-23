@@ -408,7 +408,7 @@ const OB = {
     cta: {
       title: 'READY TO COMMIT?',
       desc: 'Join our Discord to stay updated on recruitment cycles or submit a formal application below.',
-      discordUrl: 'https://discord.com/users/1156188747994505216',
+      discordUrl: 'https://discord.gg/oldblood',
       applyUrl: 'contact.html'
     }
   },
